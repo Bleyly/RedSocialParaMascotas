@@ -1,5 +1,5 @@
 import React from "react";
-import { StatusBar, StyleSheet, Text, View } from "react-native";
+import { StatusBar, StyleSheet, View } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import { BottomNavigation } from "./components/BottomNavigation";
 
