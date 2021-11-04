@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
-import { BottomNavigation } from "./components/BottomNavigation";
+import { Appbar, BottomNavigation } from "./components";
 
 const styles = StyleSheet.create({
   container: {
@@ -11,10 +11,13 @@ const styles = StyleSheet.create({
 });
 
 export default function App() {
+  const [title, setTitle] = useState("Inicio");
+
   return (
     <PaperProvider>
       <View style={styles.container}>
-        <BottomNavigation />
+        <Appbar title={title} />
+        <BottomNavigation setTitle={setTitle} />
       </View>
     </PaperProvider>
   );

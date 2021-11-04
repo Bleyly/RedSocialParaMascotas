@@ -11,7 +11,7 @@ import { Search } from "../screens/Search";
 const activeColor = `${DefaultTheme.colors.primary}FF`;
 const inactiveColor = `${DefaultTheme.colors.primary}80`;
 
-export const BottomNavigation = () => {
+export const BottomNavigation = ({ setTitle }) => {
   const [index, setIndex] = React.useState(1);
   const routes = [
     {
@@ -49,6 +49,11 @@ export const BottomNavigation = () => {
     },
   ];
 
+  const handleIndexChange = (index) => {
+    setTitle(routes[index].title);
+    setIndex(index);
+  };
+
   return (
     <PaperBottomNavigation
       theme={{
@@ -56,7 +61,7 @@ export const BottomNavigation = () => {
         colors: { ...DefaultTheme.colors, primary: "white" },
       }}
       navigationState={{ index, routes }}
-      onIndexChange={setIndex}
+      onIndexChange={handleIndexChange}
       renderScene={PaperBottomNavigation.SceneMap({
         post: Post,
         home: Home,
