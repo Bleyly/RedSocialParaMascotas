@@ -4,9 +4,9 @@ import {
   BottomNavigation as PaperBottomNavigation,
   DefaultTheme,
 } from "react-native-paper";
-import { Home } from "../screens/Home";
-import { Post } from "../screens/Post";
-import { Search } from "../screens/Search";
+import { Home } from "../../screens/Home";
+import { Post } from "../../screens/Post";
+import { Search } from "../../screens/Search";
 
 const activeColor = `${DefaultTheme.colors.primary}FF`;
 const inactiveColor = `${DefaultTheme.colors.primary}80`;
