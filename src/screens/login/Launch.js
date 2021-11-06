@@ -1,8 +1,8 @@
 import React from "react";
 import { Background } from "../../components/login";
 import { Logo } from "../../components";
-import { Button, DefaultTheme, Paragraph, Title } from "react-native-paper";
-import { StyleSheet } from "react-native";
+import { Button, Paragraph, Title } from "react-native-paper";
+import { styles } from "./styles";
 
 export const Launch = ({ navigation: { navigate } }) => {
   return (
@@ -32,19 +32,3 @@ export const Launch = ({ navigation: { navigate } }) => {
     </Background>
   );
 };
-
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 26,
-    color: DefaultTheme.colors.primary,
-    fontWeight: "bold",
-    paddingVertical: 14,
-  },
-  paragraph: {
-    textAlign: "center",
-  },
-  button: {
-    width: "100%",
-    marginTop: 16,
-  },
-});
