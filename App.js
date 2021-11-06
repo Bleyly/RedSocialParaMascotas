@@ -7,13 +7,26 @@ import {
 import { DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native";
 import { NavigationContainer } from "@react-navigation/native";
 import { DrawerNavigation } from "./src/components/navigation/drawer/DrawerNavigation";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Login } from "./src/screens";
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
     <PaperProvider>
       <View style={styles.container}>
         <NavigationContainer theme={theme}>
-          <DrawerNavigation />
+          <Stack.Navigator
+            initialRouteName="DrawerNavigation"
+            screenOptions={{ headerShown: false }}
+          >
+            <Stack.Screen
+              name="DrawerNavigation"
+              component={DrawerNavigation}
+            />
+            <Stack.Screen name="Login" component={Login} />
+          </Stack.Navigator>
         </NavigationContainer>
       </View>
     </PaperProvider>
