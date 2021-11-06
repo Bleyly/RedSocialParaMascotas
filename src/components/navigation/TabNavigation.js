@@ -1,15 +1,15 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Home, Post, Search } from "../../screens";
 import { Entypo, Feather, FontAwesome } from "@expo/vector-icons";
 import { Appbar, DefaultTheme } from "react-native-paper";
+import { names, titles, Home, Post, Search } from "../../screens";
 
 const Tab = createBottomTabNavigator();
 
 export const TabNavigation = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName={names.home}
       screenOptions={{
         tabBarInactiveTintColor: `${DefaultTheme.colors.primary}80`,
         header: ({ options: { title }, navigation: { openDrawer } }) => {
@@ -24,26 +24,26 @@ export const TabNavigation = () => {
       }}
     >
       <Tab.Screen
-        name="Post"
+        name={names.post}
         component={Post}
         options={{
-          title: "Publicar",
+          title: titles[names.post],
           tabBarIcon: (props) => <Feather name="edit" {...props} />,
         }}
       />
       <Tab.Screen
-        name="Home"
+        name={names.home}
         component={Home}
         options={{
-          title: "Inicio",
+          title: titles[names.home],
           tabBarIcon: (props) => <Entypo name="home" {...props} />,
         }}
       />
       <Tab.Screen
-        name="Search"
+        name={names.search}
         component={Search}
         options={{
-          title: "Buscar",
+          title: titles[names.search],
           tabBarIcon: (props) => <FontAwesome name="search" {...props} />,
         }}
       />
