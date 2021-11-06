@@ -1,2 +1,1 @@
-export { Appbar } from "./Appbar";
-export { BottomNavigation } from "./BottomNavigation";
+export { Logo } from "./Logo";
