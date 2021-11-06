@@ -66,7 +66,7 @@ export const DrawerNavigation = (props) => {
       <Drawer.Section>
         <Divider />
         <TouchableRipple onPress={() => console.log("pressed")}>
-          <Drawer.Item icon="exit-to-app" label="Configuración" />
+          <Drawer.Item icon="exit-to-app" label="Cerrar Sesión" />
         </TouchableRipple>
       </Drawer.Section>
     </View>
