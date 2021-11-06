@@ -6,16 +6,14 @@ import {
   Caption,
   Divider,
   Drawer,
-  List,
   Paragraph,
-  Text,
   Title,
   TouchableRipple,
 } from "react-native-paper";
-import { users } from "../../../data/users";
-import { names, titles } from "../../screens";
+import { users } from "../../../../data/users";
+import { names, titles } from "../../../screens";
 
-export const DrawerNavigation = (props) => {
+export const DrawerContent = (props) => {
   const {
     navigation: { navigate },
   } = props;
