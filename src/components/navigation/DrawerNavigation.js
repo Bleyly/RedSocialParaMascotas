@@ -13,8 +13,13 @@ import {
   TouchableRipple,
 } from "react-native-paper";
 import { users } from "../../../data/users";
+import { names, titles } from "../../screens";
 
 export const DrawerNavigation = (props) => {
+  const {
+    navigation: { navigate },
+  } = props;
+
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
@@ -46,8 +51,8 @@ export const DrawerNavigation = (props) => {
         </View>
 
         <Drawer.Section style={styles.drawerSection}>
-          <TouchableRipple onPress={() => console.log("pressed")}>
-            <Drawer.Item icon="home-outline" label="Inicio" />
+          <TouchableRipple onPress={() => navigate(names.home)}>
+            <Drawer.Item icon="home-outline" label={titles[names.home]} />
           </TouchableRipple>
           <TouchableRipple onPress={() => console.log("pressed")}>
             <Drawer.Item icon="account-outline" label="Perfil" />
