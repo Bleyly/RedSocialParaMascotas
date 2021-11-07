@@ -68,7 +68,7 @@ export const DrawerContent = (props) => {
       </DrawerContentScrollView>
       <Drawer.Section>
         <Divider />
-        <TouchableRipple onPress={() => console.log("pressed")}>
+        <TouchableRipple onPress={() => navigate(names.launch)}>
           <Drawer.Item icon="exit-to-app" label="Cerrar Sesión" />
         </TouchableRipple>
       </Drawer.Section>
