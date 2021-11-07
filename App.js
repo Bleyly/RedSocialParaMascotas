@@ -1,43 +1,20 @@
-import {
-  NavigationContainer,
-  DefaultTheme as NavigationDefaultTheme,
-} from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
-import { StatusBar, StyleSheet, View } from "react-native";
-import {
-  Provider as PaperProvider,
-  DefaultTheme as PaperDefaultTheme,
-} from "react-native-paper";
-import { DrawerNavigation } from "./src/components/navigation";
-import { names } from "./src/screens";
-import { ForgotPassword, Launch, Login, Register } from "./src/screens/login";
+import React, { useEffect, useState } from "react";
+import { LogBox, StatusBar, StyleSheet, View } from "react-native";
+import { Provider as PaperProvider } from "react-native-paper";
+import { Routes } from "./src/components/navigation";
+import { FireBaseProvider } from "./src/config/firebase";
 
-const Stack = createNativeStackNavigator();
+// Supresss known issue of firebase
+LogBox.ignoreLogs(["AsyncStorage has been extracted from react-native core"]);
 
 const App = () => {
   return (
     <PaperProvider>
-      <View style={styles.container}>
-        <NavigationContainer theme={theme}>
-          <Stack.Navigator
-            initialRouteName="DrawerNavigation"
-            screenOptions={{ headerShown: false }}
-          >
-            <Stack.Screen
-              name="DrawerNavigation"
-              component={DrawerNavigation}
-            />
-            <Stack.Screen name={names.launch} component={Launch} />
-            <Stack.Screen name={names.login} component={Login} />
-            <Stack.Screen name={names.register} component={Register} />
-            <Stack.Screen
-              name={names.forgotPassword}
-              component={ForgotPassword}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </View>
+      <FireBaseProvider>
+        <View style={styles.container}>
+          <Routes />
+        </View>
+      </FireBaseProvider>
     </PaperProvider>
   );
 };
@@ -48,16 +25,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-const theme = {
-  ...NavigationDefaultTheme,
-  colors: {
-    ...NavigationDefaultTheme.colors,
-    background: PaperDefaultTheme.colors.background,
-    notification: PaperDefaultTheme.colors.notification,
-    primary: PaperDefaultTheme.colors.primary,
-    text: PaperDefaultTheme.colors.text,
-  },
-};
 
 export default App;
