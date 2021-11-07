@@ -1,14 +1,17 @@
+import {
+  NavigationContainer,
+  DefaultTheme as NavigationDefaultTheme,
+} from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
 import {
   Provider as PaperProvider,
   DefaultTheme as PaperDefaultTheme,
 } from "react-native-paper";
-import { DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native";
-import { NavigationContainer } from "@react-navigation/native";
-import { DrawerNavigation } from "./src/components/navigation/drawer/DrawerNavigation";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Login } from "./src/screens";
+import { DrawerNavigation } from "./src/components/navigation";
+import { names } from "./src/screens";
+import { ForgotPassword, Launch, Login, Register } from "./src/screens/login";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,7 +28,13 @@ const App = () => {
               name="DrawerNavigation"
               component={DrawerNavigation}
             />
-            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name={names.launch} component={Launch} />
+            <Stack.Screen name={names.login} component={Login} />
+            <Stack.Screen name={names.register} component={Register} />
+            <Stack.Screen
+              name={names.forgotPassword}
+              component={ForgotPassword}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </View>
