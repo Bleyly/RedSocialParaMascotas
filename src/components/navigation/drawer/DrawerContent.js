@@ -6,16 +6,14 @@ import {
   Caption,
   Divider,
   Drawer,
-  List,
   Paragraph,
-  Text,
   Title,
   TouchableRipple,
 } from "react-native-paper";
-import { users } from "../../../data/users";
-import { names, titles } from "../../screens";
+import { users } from "../../../../data/users";
+import { names, titles } from "../../../screens";
 
-export const DrawerNavigation = (props) => {
+export const DrawerContent = (props) => {
   const {
     navigation: { navigate },
   } = props;
@@ -70,7 +68,7 @@ export const DrawerNavigation = (props) => {
       </DrawerContentScrollView>
       <Drawer.Section>
         <Divider />
-        <TouchableRipple onPress={() => console.log("pressed")}>
+        <TouchableRipple onPress={() => navigate(names.launch)}>
           <Drawer.Item icon="exit-to-app" label="Cerrar Sesión" />
         </TouchableRipple>
       </Drawer.Section>

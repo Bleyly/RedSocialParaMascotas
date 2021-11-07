@@ -1,45 +1,41 @@
+import {
+  NavigationContainer,
+  DefaultTheme as NavigationDefaultTheme,
+} from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
 import {
   Provider as PaperProvider,
   DefaultTheme as PaperDefaultTheme,
-  Appbar,
 } from "react-native-paper";
-import { DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import { NavigationContainer } from "@react-navigation/native";
-import { TabNavigation } from "./src/components/navigation/TabNavigation";
-import { DrawerNavigation } from "./src/components/navigation/DrawerNavigation";
-import { getHeaderTitle } from "./src/helpers/getHeaderTitle";
+import { DrawerNavigation } from "./src/components/navigation";
+import { names } from "./src/screens";
+import { ForgotPassword, Launch, Login, Register } from "./src/screens/login";
 
-const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
     <PaperProvider>
       <View style={styles.container}>
         <NavigationContainer theme={theme}>
-          <Drawer.Navigator
-            initialRouteName="TabNavigation"
-            drawerContent={DrawerNavigation}
-            screenOptions={{
-              header: ({ options: { title }, navigation: { openDrawer } }) => {
-                return (
-                  <Appbar>
-                    <Appbar.Action icon="menu" onPress={openDrawer} />
-                    <Appbar.Content title={title} />
-                    <Appbar.Action icon="chat" />
-                  </Appbar>
-                );
-              },
-            }}
+          <Stack.Navigator
+            initialRouteName="DrawerNavigation"
+            screenOptions={{ headerShown: false }}
           >
-            <Drawer.Screen
-              name="TabNavigation"
-              component={TabNavigation}
-              options={({ route }) => ({ title: getHeaderTitle(route) })}
+            <Stack.Screen
+              name="DrawerNavigation"
+              component={DrawerNavigation}
             />
-          </Drawer.Navigator>
+            <Stack.Screen name={names.launch} component={Launch} />
+            <Stack.Screen name={names.login} component={Login} />
+            <Stack.Screen name={names.register} component={Register} />
+            <Stack.Screen
+              name={names.forgotPassword}
+              component={ForgotPassword}
+            />
+          </Stack.Navigator>
         </NavigationContainer>
       </View>
     </PaperProvider>
