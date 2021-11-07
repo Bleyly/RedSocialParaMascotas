@@ -15,4 +15,20 @@ export const styles = StyleSheet.create({
     width: "100%",
     marginTop: 16,
   },
+  input: {
+    width: "100%",
+    marginTop: 16,
+  },
+  forgotPassword: {
+    width: "100%",
+    alignItems: "flex-end",
+  },
+  label: {
+    color: DefaultTheme.colors.backdrop,
+  },
+  row: {
+    flexDirection: "row",
+    marginTop: 4,
+  },
+  link: { fontWeight: "bold", color: DefaultTheme.colors.primary },
 });
