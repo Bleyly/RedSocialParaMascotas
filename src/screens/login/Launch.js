@@ -3,6 +3,7 @@ import { Background } from "../../components/login";
 import { Logo } from "../../components";
 import { Button, Paragraph, Title } from "react-native-paper";
 import { styles } from "./styles";
+import { names } from "../names";
 
 export const Launch = ({ navigation: { navigate } }) => {
   return (
@@ -18,14 +19,14 @@ export const Launch = ({ navigation: { navigate } }) => {
       <Button
         mode="contained"
         style={styles.button}
-        onPress={() => navigate("Login")}
+        onPress={() => navigate(names.login)}
       >
         Iniciar Sesión
       </Button>
       <Button
         mode="outlined"
         style={styles.button}
-        onPress={() => navigate("Register")}
+        onPress={() => navigate(names.register)}
       >
         Registrarse
       </Button>
