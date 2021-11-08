@@ -1,17 +1,22 @@
 import React from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { Text } from "react-native-paper";
+import { Cards } from "../components/Cards";
 
 export const Home = () => {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Inicio</Text>
-    </View>
+    <ScrollView>
+      <View
+        style={
+          {
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }
+        }  
+      >  
+      </View>
+      <Cards/>
+    </ScrollView>
   );
 };

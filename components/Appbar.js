@@ -7,7 +7,7 @@ export const Appbar = ({ title }) => {
   };
 
   return (
-    <PaperAppbar>
+    <PaperAppbar style={{marginBottom:8}}>
       <PaperAppbar.Action icon="menu" onPress={handlePress} />
       <PaperAppbar.Content title={title} />
       <PaperAppbar.Action icon="chat" onPress={handlePress} />
