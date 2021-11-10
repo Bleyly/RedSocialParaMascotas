@@ -1,7 +1,6 @@
 import React from "react";
 import { ScrollView, View } from "react-native";
-import { Text } from "react-native-paper";
-import { Cards } from "../components/Cards";
+import { Cards } from "../components/Card";
 
 export const Home = () => {
   return (
@@ -14,7 +13,7 @@ export const Home = () => {
             alignItems: "center",
           }
         }  
-      >  
+      >
       </View>
       <Cards/>
     </ScrollView>
