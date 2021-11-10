@@ -1,11 +1,21 @@
 export const names = Object.freeze({
+  // login
   launch: "Launch",
   login: "Login",
   register: "Register",
   forgotPassword: "ForgotPassword",
 
-  home: "Home",
+  // post
   post: "Post",
+  standardPost: "StandardPost",
+  sellPost: "SellPost",
+  givePost: "GivePost",
+  articlePost: "ArticlePost",
+
+  // home
+  home: "Home",
+
+  // search
   search: "Search",
 });
 
