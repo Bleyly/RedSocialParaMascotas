@@ -1,135 +1,152 @@
-import React, { useState } from "react";
-import { View, Image, StyleSheet } from 'react-native';
-import * as Paper from "react-native-paper";
-import { PostHeader } from "../components/Post/PostHeader";
-import { PostPhoto } from "../components/Post/PostPhoto";
+import { AntDesign } from "@expo/vector-icons";
+import React, { useRef, useState } from "react";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Avatar,
+  Button,
+  List,
+  TextInput,
+  Title,
+  TouchableRipple,
+} from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
+import { animals } from "../../data/animals";
+import { races } from "../../data/races";
+import { users } from "../../data/users";
+import { Icon } from "../components/Icon";
+import { PostPhoto } from "../components/Post/PostPhoto";
+import { ProgressBar } from "../components/Post/ProgressBar";
+import { names } from "./names";
 
-const styles = StyleSheet.create({
-  textArea: {
-    margin: 10,
-  },
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 0,
-    bottom: 0,
-    backgroundColor:"#4630eb"
-  },
-});
+export const VenderPost = ({ navigation: { goBack, navigate } }) => {
+  const ageRef = useRef();
+  const quantityRef = useRef();
+  const priceRef = useRef();
 
-export const VenderPost = (props) => {
+  const [showAnimals, setShowAnimals] = useState(false);
+  const [showRaces, setShowRaces] = useState(false);
 
-  const [showDropDown1, setShowDropDown1] = useState(false);
-  const [showDropDown2, setShowDropDown2] = useState(false);
-
-  const [txtNombre, setTxtNombre] = useState('');
-  const [slcTipo, setTipo] = useState();
-  const [slcRaza, setRaza] = useState();
-  const [txtEdad, setTxtEdad] = useState();
-  const [txtCantidad, setTxtCantidad] = useState();
-
-  const TipoAnimalList = [
-    {
-      label: "Gato",
-      value: 1,
-    },
-    {
-      label: "Perro",
-      value: 2,
-    },
-    {
-      label: "Ganado",
-      value: 3,
-    },
-  ];
-  const TipoRazaList = [
-    {
-      label: "Viralata",
-      value: 1,
-    },
-    {
-      label: "Puro",
-      value: 2,
-    },
-  ];
+  const [animal, setAnimal] = useState();
+  const [race, setRace] = useState();
 
   return (
-    <View style={{flex:1}}>
-      <PostHeader 
-        title="¿Qué vas a publicar?"
-        setPublicacion={props.setPublicacion}
-        userName={props.userName}>
-      </PostHeader>
+    <View style={styles.screen}>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.back} onPress={() => goBack()}>
+          <AntDesign name="arrowleft" size={24} />
+        </TouchableOpacity>
+        <Title style={styles.title}>¿Qué vas a publicar?</Title>
+      </View>
+      <ProgressBar progress={0.5} />
 
-      <Paper.TextInput
-        label="Nombre del Animal"
-        mode="outlined"
-        onChangeText={txtNombre => setTxtNombre(txtNombre)}
-        style={styles.textArea}
-      />
+      <View style={styles.container}>
+        <View style={styles.userInfo}>
+          <Avatar.Image source={users[0].photo} style={styles.avatar} />
+          <Title style={styles.username}>{users[0].name}</Title>
+        </View>
 
-    <View style={{flex: 0, flexDirection: 'row'}}>
-        <View style={{
-          flexGrow: 1,
-        }}>
-          <Paper.TextInput
-            label="Edad"
+        <View style={styles.form}>
+          <TextInput
             mode="outlined"
-            onChangeText={txtEdad => setTxtEdad(txtEdad)}
-            style={styles.textArea}
+            label="Nombre del animal"
+            onSubmitEditing={() => ageRef.current.focus()}
+            returnKeyType="next"
           />
+          <View style={styles.row}>
+            <View style={[styles.rowChild, styles.containerLeft]}>
+              <DropDown
+                label="Tipo de animal"
+                mode="outlined"
+                visible={showAnimals}
+                showDropDown={() => setShowAnimals(true)}
+                onDismiss={() => setShowAnimals(false)}
+                value={animal}
+                setValue={setAnimal}
+                list={animals}
+              />
+            </View>
+            <View style={[styles.rowChild, styles.containerRight]}>
+              <DropDown
+                label="Raza"
+                mode="outlined"
+                visible={showRaces}
+                showDropDown={() => setShowRaces(true)}
+                onDismiss={() => setShowRaces(false)}
+                value={race}
+                setValue={setRace}
+                list={races}
+              />
+            </View>
+          </View>
+          <View style={styles.row}>
+            <View style={[styles.rowChild, styles.containerLeft]}>
+              <TextInput
+                ref={ageRef}
+                mode="outlined"
+                label="Edad"
+                onSubmitEditing={() => quantityRef.current.focus()}
+                returnKeyType="next"
+              />
+            </View>
+            <View style={[styles.rowChild, styles.containerCenter]}>
+              <TextInput
+                ref={quantityRef}
+                mode="outlined"
+                label="Cantidad"
+                onSubmitEditing={() => priceRef.current.focus()}
+                returnKeyType="next"
+              />
+            </View>
+            <View style={[styles.rowChild, styles.containerRight]}>
+              <TextInput
+                ref={priceRef}
+                mode="outlined"
+                label="Precio"
+                returnKeyType="done"
+                keyboardType="decimal-pad"
+              />
+            </View>
+          </View>
         </View>
-        <View style={{
-          width: '40%',
-        }}>
-          <Paper.TextInput
-            label="Cantidad"
-            mode="outlined"
-            onChangeText={txtCantidad => setTxtCantidad(txtCantidad)}
-            style={styles.textArea}
-          />       
-        </View>
-      </View>
 
-      <View style={{flex: 0, flexDirection: 'row'}}>
-        <View style={{
-          flexGrow: 1,margin:10
-        }}>
-            <DropDown
-              label={"Tipo de Animal"}
-              mode={"outlined"}
-              visible={showDropDown1}
-              showDropDown={() => setShowDropDown1(true)}
-              onDismiss={() => setShowDropDown1(false)}
-              value={slcTipo}
-              setValue={setTipo}
-              list={TipoAnimalList}
-            />
-        </View>
-        <View style={{
-          width: '40%',margin:10
-        }}>
-            <DropDown
-              label={"Raza"}
-              mode={"outlined"}
-              visible={showDropDown2}
-              showDropDown={() => setShowDropDown2(true)}
-              onDismiss={() => setShowDropDown2(false)}
-              value={slcRaza}
-              setValue={setRaza}
-              list={TipoRazaList}
-            />  
-        </View>
+        <PostPhoto />
       </View>
-      
-      <PostPhoto></PostPhoto>
-
-      <Paper.FAB
-        style={styles.fab}
-        label="Finalizar"
-        onPress={()=>alert('test')}
-      />
-  </View>
+      <Button
+        mode="contained"
+        onPress={() => navigate(names.home)}
+        style={styles.end}
+      >
+        Finalizar
+      </Button>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    marginTop: 8,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginLeft: 16,
+    marginBottom: 12,
+  },
+  back: { marginTop: 5 },
+  title: { fontSize: 24, marginLeft: 24 },
+  container: { paddingLeft: 16, paddingRight: 16 },
+  userInfo: { flexDirection: "row", alignItems: "center" },
+  avatar: { marginTop: 16 },
+  username: { marginLeft: 16 },
+  end: { position: "absolute", bottom: 32, right: 16 },
+  form: { marginTop: 16 },
+  row: {
+    flexDirection: "row",
+    marginTop: 8,
+  },
+  rowChild: { flexGrow: 1 },
+  containerLeft: { marginRight: 4 },
+  containerCenter: { marginLeft: 4, marginRight: 4 },
+  containerRight: { marginLeft: 4 },
+});

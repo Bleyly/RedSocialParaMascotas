@@ -1,82 +1,109 @@
-import React, { useState } from "react";
-import { View, Image, StyleSheet } from 'react-native';
-import * as Paper from "react-native-paper";
-import { PostHeader } from "../components/Post/PostHeader";
+import { AntDesign } from "@expo/vector-icons";
+import React, { useRef } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Avatar, Button, TextInput, Title } from "react-native-paper";
+import { names } from "./names";
+import { users } from "../../data/users";
 import { PostPhoto } from "../components/Post/PostPhoto";
+import { ProgressBar } from "../components/Post/ProgressBar";
 
-const styles = StyleSheet.create({
-  textArea: {
-    margin: 10,
-  },
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 0,
-    bottom: 0,
-    backgroundColor:"#4630eb"
-  },
-});
-
-export const ArticuloPost = (props) => {
-
-  const [txtTitulo, setTxtTitulo] = useState();
-  const [txtDescripcion, setTxtDescripcion] = useState();
-  const [txtCantidad, setTxtCantidad] = useState();
-  const [txtPrecio, setTxtPrecio] = useState();
+export const ArticuloPost = ({ navigation: { goBack, navigate } }) => {
+  const descriptionRef = useRef();
+  const quantityRef = useRef();
+  const priceRef = useRef();
 
   return (
-    <View style={{flex:1}}>
-      <PostHeader 
-        title="¿Qué vas a publicar?"
-        setPublicacion={props.setPublicacion}
-        userName={props.userName}>
-      </PostHeader>
-
-      <Paper.TextInput
-        label="Titulo"
-        mode="outlined"
-        onChangeText={txtTitulo => setTxtTitulo(txtTitulo)}
-        style={styles.textArea}
-      />
-      <Paper.TextInput 
-        multiline
-        placeholder="Descripcion"
-        mode="outlined"
-        onChangeText={txtDescripcion => setTxtDescripcion(txtDescripcion)}
-        style={styles.textArea}
-      />
-
-      <View style={{flex: 0, flexDirection: 'row'}}>
-        <View style={{
-          flexGrow: 1,
-        }}>
-          <Paper.TextInput
-            label="Cantidad"
-            mode="outlined"
-            onChangeText={txtCantidad => setTxtCantidad(txtCantidad)}
-            style={styles.textArea}
-          />
-        </View>
-        <View style={{
-          width: '40%',
-        }}>
-          <Paper.TextInput
-            label="Precio"
-            mode="outlined"
-            onChangeText={txtPrecio => setTxtPrecio(txtPrecio)}
-            style={styles.textArea}
-          />       
-        </View>
+    <View style={styles.screen}>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.back} onPress={() => goBack()}>
+          <AntDesign name="arrowleft" size={24} />
+        </TouchableOpacity>
+        <Title style={styles.title}>¿Qué vas a publicar?</Title>
       </View>
-      
-      <PostPhoto></PostPhoto>
+      <ProgressBar progress={0.5} />
 
-      <Paper.FAB
-        style={styles.fab}
-        label="Finalizar"
-        onPress={()=>alert('test')}
-      />
-      
-  </View>
+      <View style={styles.container}>
+        <View style={styles.userInfo}>
+          <Avatar.Image source={users[0].photo} style={styles.avatar} />
+          <Title style={styles.username}>{users[0].name}</Title>
+        </View>
+
+        <View style={styles.form}>
+          <TextInput
+            mode="outlined"
+            label="Título"
+            onSubmitEditing={() => descriptionRef.current.focus()}
+            returnKeyType="next"
+          />
+
+          <TextInput
+            style={{ marginTop: 8 }}
+            ref={descriptionRef}
+            mode="outlined"
+            label="Descripción"
+            returnKeyType="next"
+            onSubmitEditing={() => quantityRef.current.focus()}
+          />
+
+          <View style={styles.row}>
+            <View style={[styles.rowChild, styles.containerLeft]}>
+              <TextInput
+                ref={quantityRef}
+                mode="outlined"
+                label="Cantidad"
+                onSubmitEditing={() => priceRef.current.focus()}
+                returnKeyType="next"
+              />
+            </View>
+            <View style={[styles.rowChild, styles.containerRight]}>
+              <TextInput
+                ref={priceRef}
+                mode="outlined"
+                label="Precio"
+                returnKeyType="done"
+                keyboardType="decimal-pad"
+              />
+            </View>
+          </View>
+        </View>
+
+        <PostPhoto />
+      </View>
+      <Button
+        mode="contained"
+        onPress={() => navigate(names.home)}
+        style={styles.end}
+      >
+        Finalizar
+      </Button>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    marginTop: 8,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginLeft: 16,
+    marginBottom: 12,
+  },
+  back: { marginTop: 5 },
+  title: { fontSize: 24, marginLeft: 24 },
+  container: { paddingLeft: 16, paddingRight: 16 },
+  userInfo: { flexDirection: "row", alignItems: "center" },
+  avatar: { marginTop: 16 },
+  username: { marginLeft: 16 },
+  end: { position: "absolute", bottom: 32, right: 16 },
+  form: { marginTop: 16 },
+  row: {
+    flexDirection: "row",
+    marginTop: 8,
+  },
+  rowChild: { flexGrow: 1 },
+  containerLeft: { marginRight: 4 },
+  containerRight: { marginLeft: 4 },
+});
