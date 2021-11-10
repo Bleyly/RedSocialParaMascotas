@@ -4,6 +4,7 @@ import { names, Post } from "../../screens";
 import { StandarPost } from "../../screens/StandarPost";
 import { VenderPost } from "../../screens/VenderPost";
 import { RegalarPost } from "../../screens/RegalarPost";
+import { ArticuloPost } from "../../screens/ArticuloPost";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,7 @@ export const PostNavigation = () => {
       <Stack.Screen name={names.standardPost} component={StandarPost} />
       <Stack.Screen name={names.sellPost} component={VenderPost} />
       <Stack.Screen name={names.givePost} component={RegalarPost} />
+      <Stack.Screen name={names.articlePost} component={ArticuloPost} />
     </Stack.Navigator>
   );
 };
