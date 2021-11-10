@@ -5,7 +5,7 @@ export const getHeaderTitle = (route) => {
   const name = getFocusedRouteNameFromRoute(route);
 
   switch (name) {
-    case names.post:
+    case "PostNavigation":
       return titles[names.post];
     case names.search:
       return titles[names.search];
