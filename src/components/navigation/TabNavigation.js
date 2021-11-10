@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo, Feather, FontAwesome } from "@expo/vector-icons";
 import { DefaultTheme } from "react-native-paper";
 import { names, titles, Home, Post, Search } from "../../screens";
+import { PostNavigation } from "./PostNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,11 +17,12 @@ export const TabNavigation = () => {
       }}
     >
       <Tab.Screen
-        name={names.post}
-        component={Post}
+        name="PostNavigation"
+        component={PostNavigation}
         options={{
           title: titles[names.post],
           tabBarIcon: (props) => <Feather name="edit" {...props} />,
+          unmountOnBlur: true,
         }}
       />
       <Tab.Screen
