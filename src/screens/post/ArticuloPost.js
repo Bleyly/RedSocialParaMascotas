@@ -4,8 +4,7 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Avatar, Button, TextInput, Title } from "react-native-paper";
 import { names } from "../names";
 import { users } from "../../../data/users";
-import { PostPhoto } from "../../components/Post/PostPhoto";
-import { ProgressBar } from "../../components/Post/ProgressBar";
+import { PostPhoto, ProgressBar } from "../../components/Post";
 
 export const ArticuloPost = ({ navigation: { goBack, navigate } }) => {
   const descriptionRef = useRef();

@@ -5,8 +5,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Avatar, Button, TextInput, Title } from "react-native-paper";
 import { names } from "../names";
 import { users } from "../../../data/users";
-import { ProgressBar } from "../../components/Post/ProgressBar";
-import { PostPhoto } from "../../components/Post/PostPhoto";
+import { PostPhoto, ProgressBar } from "../../components/Post";
 
 export const StandarPost = ({ navigation: { goBack, navigate } }) => {
   return (

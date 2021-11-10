@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { List, Title, TouchableRipple } from "react-native-paper";
 import { Icon } from "../../components/Icon";
-import { ProgressBar } from "../../components/Post/ProgressBar";
+import { ProgressBar } from "../../components/Post";
 import { names } from "../names";
 
 export const Post = ({ navigation: { navigate } }) => {
