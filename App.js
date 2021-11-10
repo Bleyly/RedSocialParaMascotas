@@ -4,7 +4,7 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import { StatusBar, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import {
   Provider as PaperProvider,
   DefaultTheme as PaperDefaultTheme,
@@ -12,6 +12,7 @@ import {
 import { DrawerNavigation } from "./src/components/navigation";
 import { names } from "./src/screens";
 import { ForgotPassword, Launch, Login, Register } from "./src/screens/login";
+import Constants from "expo-constants";
 
 const Stack = createNativeStackNavigator();
 
@@ -44,7 +45,7 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: StatusBar.currentHeight,
+    marginTop: Constants.statusBarHeight,
     flex: 1,
   },
 });
