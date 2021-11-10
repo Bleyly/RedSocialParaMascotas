@@ -1,16 +1,23 @@
 import { AntDesign } from "@expo/vector-icons";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Avatar, Button, TextInput, Title } from "react-native-paper";
-import { names } from "./names";
-import { users } from "../../data/users";
-import { PostPhoto } from "../components/Post/PostPhoto";
-import { ProgressBar } from "../components/Post/ProgressBar";
+import DropDown from "react-native-paper-dropdown";
+import { animals } from "../../../data/animals";
+import { races } from "../../../data/races";
+import { users } from "../../../data/users";
+import { PostPhoto } from "../../components/Post/PostPhoto";
+import { ProgressBar } from "../../components/Post/ProgressBar";
 
-export const ArticuloPost = ({ navigation: { goBack, navigate } }) => {
-  const descriptionRef = useRef();
+export const RegalarPost = ({ navigation: { goBack, navigate } }) => {
+  const ageRef = useRef();
   const quantityRef = useRef();
-  const priceRef = useRef();
+
+  const [showAnimals, setShowAnimals] = useState(false);
+  const [showRaces, setShowRaces] = useState(false);
+
+  const [animal, setAnimal] = useState();
+  const [race, setRace] = useState();
 
   return (
     <View style={styles.screen}>
@@ -31,37 +38,52 @@ export const ArticuloPost = ({ navigation: { goBack, navigate } }) => {
         <View style={styles.form}>
           <TextInput
             mode="outlined"
-            label="Título"
-            onSubmitEditing={() => descriptionRef.current.focus()}
+            label="Nombre del animal"
+            onSubmitEditing={() => ageRef.current.focus()}
             returnKeyType="next"
           />
-
-          <TextInput
-            style={{ marginTop: 8 }}
-            ref={descriptionRef}
-            mode="outlined"
-            label="Descripción"
-            returnKeyType="next"
-            onSubmitEditing={() => quantityRef.current.focus()}
-          />
-
+          <View style={styles.row}>
+            <View style={[styles.rowChild, styles.containerLeft]}>
+              <DropDown
+                label="Tipo de animal"
+                mode="outlined"
+                visible={showAnimals}
+                showDropDown={() => setShowAnimals(true)}
+                onDismiss={() => setShowAnimals(false)}
+                value={animal}
+                setValue={setAnimal}
+                list={animals}
+              />
+            </View>
+            <View style={[styles.rowChild, styles.containerRight]}>
+              <DropDown
+                label="Raza"
+                mode="outlined"
+                visible={showRaces}
+                showDropDown={() => setShowRaces(true)}
+                onDismiss={() => setShowRaces(false)}
+                value={race}
+                setValue={setRace}
+                list={races}
+              />
+            </View>
+          </View>
           <View style={styles.row}>
             <View style={[styles.rowChild, styles.containerLeft]}>
               <TextInput
-                ref={quantityRef}
+                ref={ageRef}
                 mode="outlined"
-                label="Cantidad"
-                onSubmitEditing={() => priceRef.current.focus()}
+                label="Edad"
+                onSubmitEditing={() => quantityRef.current.focus()}
                 returnKeyType="next"
               />
             </View>
             <View style={[styles.rowChild, styles.containerRight]}>
               <TextInput
-                ref={priceRef}
+                ref={quantityRef}
                 mode="outlined"
-                label="Precio"
+                label="Cantidad"
                 returnKeyType="done"
-                keyboardType="decimal-pad"
               />
             </View>
           </View>

@@ -1,9 +1,9 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { List, Title, TouchableRipple } from "react-native-paper";
-import { Icon } from "../components/Icon";
-import { ProgressBar } from "../components/Post/ProgressBar";
-import { names } from "./names";
+import { Icon } from "../../components/Icon";
+import { ProgressBar } from "../../components/Post/ProgressBar";
+import { names } from "../names";
 
 export const Post = ({ navigation: { navigate } }) => {
   return (
@@ -19,7 +19,7 @@ export const Post = ({ navigation: { navigate } }) => {
               left={() => (
                 <Icon
                   size={32}
-                  source={require("../../assets/icons/icon_standar.png")}
+                  source={require("../../../assets/icons/icon_standar.png")}
                 />
               )}
             />
@@ -30,7 +30,7 @@ export const Post = ({ navigation: { navigate } }) => {
               left={() => (
                 <Icon
                   size={32}
-                  source={require("../../assets/icons/icon_vender.png")}
+                  source={require("../../../assets/icons/icon_vender.png")}
                 />
               )}
             />
@@ -41,7 +41,7 @@ export const Post = ({ navigation: { navigate } }) => {
               left={() => (
                 <Icon
                   size={32}
-                  source={require("../../assets/icons/icon_regalar.png")}
+                  source={require("../../../assets/icons/icon_regalar.png")}
                 />
               )}
             />
@@ -52,7 +52,7 @@ export const Post = ({ navigation: { navigate } }) => {
               left={() => (
                 <Icon
                   size={32}
-                  source={require("../../assets/icons/icon_articulos.png")}
+                  source={require("../../../assets/icons/icon_articulos.png")}
                 />
               )}
             />

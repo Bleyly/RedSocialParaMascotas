@@ -10,13 +10,13 @@ import {
   TouchableRipple,
 } from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
-import { animals } from "../../data/animals";
-import { races } from "../../data/races";
-import { users } from "../../data/users";
-import { Icon } from "../components/Icon";
-import { PostPhoto } from "../components/Post/PostPhoto";
-import { ProgressBar } from "../components/Post/ProgressBar";
-import { names } from "./names";
+import { animals } from "../../../data/animals";
+import { races } from "../../../data/races";
+import { users } from "../../../data/users";
+import { Icon } from "../../components/Icon";
+import { PostPhoto } from "../../components/Post/PostPhoto";
+import { ProgressBar } from "../../components/Post/ProgressBar";
+import { names } from "../names";
 
 export const VenderPost = ({ navigation: { goBack, navigate } }) => {
   const ageRef = useRef();

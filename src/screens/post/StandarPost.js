@@ -3,10 +3,10 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Avatar, Button, TextInput, Title } from "react-native-paper";
-import { names } from "./names";
-import { users } from "../../data/users";
-import { ProgressBar } from "../components/Post/ProgressBar";
-import { PostPhoto } from "../components/Post/PostPhoto";
+import { names } from "../names";
+import { users } from "../../../data/users";
+import { ProgressBar } from "../../components/Post/ProgressBar";
+import { PostPhoto } from "../../components/Post/PostPhoto";
 
 export const StandarPost = ({ navigation: { goBack, navigate } }) => {
   return (

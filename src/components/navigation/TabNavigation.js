@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo, Feather, FontAwesome } from "@expo/vector-icons";
 import { DefaultTheme } from "react-native-paper";
-import { names, titles, Home, Post, Search } from "../../screens";
+import { names, titles, Home, Search } from "../../screens";
 import { PostNavigation } from "./PostNavigation";
 
 const Tab = createBottomTabNavigator();

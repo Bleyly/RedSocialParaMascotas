@@ -1,10 +1,13 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { names, Post } from "../../screens";
-import { StandarPost } from "../../screens/StandarPost";
-import { VenderPost } from "../../screens/VenderPost";
-import { RegalarPost } from "../../screens/RegalarPost";
-import { ArticuloPost } from "../../screens/ArticuloPost";
+import { names } from "../../screens";
+import {
+  ArticuloPost,
+  Post,
+  RegalarPost,
+  StandarPost,
+  VenderPost,
+} from "../../screens/post";
 
 const Stack = createNativeStackNavigator();
 
