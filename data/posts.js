@@ -10,7 +10,7 @@ export const posts = [
       require("../assets/dogazo.jpg"),
     ],
     tag: "post",
-    likes: (Math.random() * 10000).toFixed(0),
+    likes: Number((Math.random() * 10000).toFixed(0)),
     comment: 3,
   },
   {
@@ -18,13 +18,13 @@ export const posts = [
     userId: 1,
     description: "Inserte descripción aqui",
     photos: [
-      require("../assets/cat.jpg"),
       require("../assets/dog.jpg"),
       require("../assets/pug.jpg"),
       require("../assets/dogazo.jpg"),
+      require("../assets/cat.jpg"),
     ],
     tag: "post",
-    likes: (Math.random() * 10000).toFixed(0),
+    likes: Number((Math.random() * 10000).toFixed(0)),
     comment: 3,
   },
   {
@@ -32,13 +32,13 @@ export const posts = [
     userId: 2,
     description: "Inserte descripción aqui",
     photos: [
-      require("../assets/cat.jpg"),
-      require("../assets/dog.jpg"),
       require("../assets/pug.jpg"),
       require("../assets/dogazo.jpg"),
+      require("../assets/cat.jpg"),
+      require("../assets/dog.jpg"),
     ],
     tag: "post",
-    likes: (Math.random() * 10000).toFixed(0),
+    likes: Number((Math.random() * 10000).toFixed(0)),
     comment: 3,
   },
   {
@@ -46,13 +46,13 @@ export const posts = [
     userId: 2,
     description: "Inserte descripción aqui",
     photos: [
+      require("../assets/dogazo.jpg"),
       require("../assets/cat.jpg"),
       require("../assets/dog.jpg"),
       require("../assets/pug.jpg"),
-      require("../assets/dogazo.jpg"),
     ],
     tag: "post",
-    likes: (Math.random() * 10000).toFixed(0),
+    likes: Number((Math.random() * 10000).toFixed(0)),
     comment: 3,
   },
   {
@@ -66,7 +66,7 @@ export const posts = [
       require("../assets/dogazo.jpg"),
     ],
     tag: "post",
-    likes: (Math.random() * 10000).toFixed(0),
+    likes: Number((Math.random() * 10000).toFixed(0)),
     comment: 3,
   },
   {
@@ -74,13 +74,13 @@ export const posts = [
     userId: 3,
     description: "Inserte descripción aqui",
     photos: [
-      require("../assets/cat.jpg"),
       require("../assets/dog.jpg"),
       require("../assets/pug.jpg"),
       require("../assets/dogazo.jpg"),
+      require("../assets/cat.jpg"),
     ],
     tag: "post",
-    likes: (Math.random() * 10000).toFixed(0),
+    likes: Number((Math.random() * 10000).toFixed(0)),
     comment: 3,
   },
 ];
