@@ -1,28 +1,32 @@
 import React, { useRef, useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { Button, Text, TextInput, Title } from "react-native-paper";
-import { Logo } from "../../components";
+import { ErrorMessage, Logo } from "../../components";
 import { BackButton } from "../../components/buttons";
 import { Background } from "../../components/login";
-import { validateEmail, validatePassword } from "../../helpers/utils";
+import { useFireBaseContext } from "../../config/firebase";
 import { names } from "../names";
 import { styles } from "./styles";
 
 export const Login = ({ navigation: { navigate } }) => {
-  const [email, setEmail] = useState({ value: "", error: false });
-  const [password, setPassword] = useState({ value: "", error: false });
+  const { login } = useFireBaseContext();
 
   const passwordRef = useRef();
 
-  const handleLogin = () => {
-    const emailError = validateEmail(email.value);
-    const passwordError = validatePassword(password.value);
+  const [error, setError] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    setEmail({ ...email, error: emailError });
-    setPassword({ ...password, error: passwordError });
-
-    if (!emailError && !passwordError) {
-      navigate(names.home);
+  const handleLogin = async () => {
+    try {
+      await login(email, password);
+    } catch (error) {
+      if (error.code === "auth/user-not-found") {
+        setError("Usuario no encontrado");
+      } else {
+        setError("Correo o contraseña no válidos");
+      }
+      console.log(error);
     }
   };
 
@@ -34,13 +38,15 @@ export const Login = ({ navigation: { navigate } }) => {
 
       <Title style={styles.title}>Bienvenido de nuevo</Title>
 
+      <ErrorMessage error={error} />
+
       <TextInput
         label="Correo"
         mode="outlined"
         returnKeyType="next"
-        value={email.value}
-        onChangeText={(value) => setEmail({ value, error: false })}
-        error={email.error}
+        value={email}
+        onChangeText={(value) => setEmail(value)}
+        error={error}
         autoCapitalize="none"
         autoCompleteType="email"
         textContentType="emailAddress"
@@ -54,9 +60,9 @@ export const Login = ({ navigation: { navigate } }) => {
         label="Contraseña"
         mode="outlined"
         returnKeyType="done"
-        value={password.value}
-        error={password.error}
-        onChangeText={(value) => setPassword({ value, error: false })}
+        value={password}
+        error={error}
+        onChangeText={(value) => setPassword(value)}
         secureTextEntry={true}
         style={styles.input}
       />

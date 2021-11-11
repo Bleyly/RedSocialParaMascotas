@@ -11,7 +11,7 @@ export const DrawerNavigation = () => {
   return (
     <Drawer.Navigator
       initialRouteName="TabNavigation"
-      drawerContent={DrawerContent}
+      drawerContent={(props) => <DrawerContent {...props} />}
       screenOptions={{
         header: ({ options: { title }, navigation: { openDrawer } }) => {
           return (

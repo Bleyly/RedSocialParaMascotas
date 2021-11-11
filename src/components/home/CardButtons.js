@@ -3,8 +3,8 @@ import {
   Ionicons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import React, { useState } from "react";
-import { View } from "react-native";
+import React from "react";
+import { TouchableOpacity, View } from "react-native";
 
 export const CardButtons = ({ liked, setLiked, saved, setSaved }) => {
   return (
@@ -17,43 +17,35 @@ export const CardButtons = ({ liked, setLiked, saved, setSaved }) => {
     >
       <View style={{ flexDirection: "row" }}>
         {liked ? (
-          <AntDesign
-            name="heart"
-            size={24}
-            onPress={() => setLiked(false)}
-            color="red"
-          />
+          <TouchableOpacity onPress={() => setLiked(false)}>
+            <AntDesign name="heart" size={24} color="red" />
+          </TouchableOpacity>
         ) : (
-          <AntDesign
-            name="hearto"
-            size={24}
-            onPress={() => setLiked(true)}
-            color="black"
-          />
+          <TouchableOpacity onPress={() => setLiked(true)}>
+            <AntDesign name="hearto" size={24} color="black" />
+          </TouchableOpacity>
         )}
 
-        <MaterialCommunityIcons
-          name="comment-text-outline"
-          size={24}
-          style={{ marginLeft: 8 }}
-        />
-        <AntDesign name="sharealt" size={24} style={{ marginLeft: 8 }} />
+        <TouchableOpacity onPress={() => {}}>
+          <MaterialCommunityIcons
+            name="comment-text-outline"
+            size={24}
+            style={{ marginLeft: 8 }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {}}>
+          <AntDesign name="sharealt" size={24} style={{ marginLeft: 8 }} />
+        </TouchableOpacity>
       </View>
       <View>
         {saved ? (
-          <Ionicons
-            name="bookmark"
-            size={24}
-            onPress={() => setSaved(false)}
-            color="#5F89FE"
-          />
+          <TouchableOpacity onPress={() => setSaved(false)}>
+            <Ionicons name="bookmark" size={24} color="#5F89FE" />
+          </TouchableOpacity>
         ) : (
-          <Ionicons
-            name="bookmark-outline"
-            size={24}
-            onPress={() => setSaved(true)}
-            color="black"
-          />
+          <TouchableOpacity onPress={() => setSaved(true)}>
+            <Ionicons name="bookmark-outline" size={24} color="black" />
+          </TouchableOpacity>
         )}
       </View>
     </View>

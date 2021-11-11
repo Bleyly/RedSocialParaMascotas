@@ -1,2 +1,1 @@
-export { DrawerNavigation } from "./drawer/DrawerNavigation";
-export { TabNavigation } from "./TabNavigation";
+export { Routes } from "./Routes";

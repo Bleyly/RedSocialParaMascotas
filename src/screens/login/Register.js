@@ -2,35 +2,50 @@ import React, { useRef, useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { Button, Text, TextInput, Title } from "react-native-paper";
 import { names } from "../names";
-import { Logo } from "../../components";
+import { ErrorMessage, Logo } from "../../components";
 import { BackButton } from "../../components/buttons";
 import { Background } from "../../components/login";
 import { styles } from "./styles";
-import {
-  validateEmail,
-  validateName,
-  validatePassword,
-} from "../../helpers/utils";
+import { useFireBaseContext } from "../../config/firebase";
 
 export const Register = ({ navigation: { navigate } }) => {
-  const [name, setName] = useState({ value: "", error: false });
-  const [email, setEmail] = useState({ value: "", error: false });
-  const [password, setPassword] = useState({ value: "", error: false });
+  const { register } = useFireBaseContext();
 
   const emailRef = useRef();
   const passwordRef = useRef();
 
+  const [name, setName] = useState({ value: "", error: null });
+  const [email, setEmail] = useState({ value: "", error: null });
+  const [password, setPassword] = useState({ value: "", error: null });
+
   const handleRegister = () => {
-    const nameError = validateName(name.value);
-    const emailError = validateEmail(email.value);
-    const passwordError = validatePassword(password.value);
+    if (name.value.length === 0) {
+      setName({ ...name, error: "El nombre es requerido" });
+    }
 
-    setName({ ...name, error: nameError });
-    setEmail({ ...email, error: emailError });
-    setPassword({ ...password, error: passwordError });
+    if (email.value.length === 0) {
+      setEmail({ ...email, error: "El correo es requerido" });
+    }
 
-    if (!nameError && !emailError && !passwordError) {
-      navigate(names.home);
+    if (password.value.length === 0) {
+      setPassword({ ...password, error: "La contraseña es requerido" });
+    }
+
+    if (!name.error && !email.error && !password.error) {
+      register(name.value, email.value, password.value).catch((error) => {
+        if (error.code === "auth/email-already-in-use") {
+          setEmail({ ...email, error: "El correo es ya esta en uso" });
+        } else if (error.code === "auth/invalid-email") {
+          setEmail({ ...email, error: "El correo es inválido" });
+        } else if (error.code === "auth/weak-password") {
+          setPassword({
+            ...password,
+            error: "La contraseña debe tener al menos 6 caracteres",
+          });
+        } else {
+          console.log(error);
+        }
+      });
     }
   };
 
@@ -42,12 +57,14 @@ export const Register = ({ navigation: { navigate } }) => {
 
       <Title style={styles.title}>Crear una Cuenta</Title>
 
+      <ErrorMessage error={name.error ?? email.error ?? password.error} />
+
       <TextInput
         label="Nombre"
         mode="outlined"
         returnKeyType="next"
         value={name.value}
-        onChangeText={(value) => setName({ value, error: false })}
+        onChangeText={(value) => setName({ value, error: null })}
         error={name.error}
         style={styles.input}
         onSubmitEditing={() => emailRef.current.focus()}
@@ -59,7 +76,7 @@ export const Register = ({ navigation: { navigate } }) => {
         mode="outlined"
         returnKeyType="next"
         value={email.value}
-        onChangeText={(value) => setEmail({ value, error: false })}
+        onChangeText={(value) => setEmail({ value, error: null })}
         error={email.error}
         autoCapitalize="none"
         autoCompleteType="email"
@@ -76,7 +93,7 @@ export const Register = ({ navigation: { navigate } }) => {
         returnKeyType="done"
         value={password.value}
         error={password.error}
-        onChangeText={(value) => setPassword({ value, error: false })}
+        onChangeText={(value) => setPassword({ value, error: null })}
         secureTextEntry={true}
         style={styles.input}
       />

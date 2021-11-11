@@ -4,7 +4,6 @@ import { names } from "../names";
 import { Logo } from "../../components";
 import { BackButton } from "../../components/buttons";
 import { Background } from "../../components/login";
-import { validateEmail } from "../../helpers/utils";
 import { styles } from "./styles";
 
 export const ForgotPassword = ({ navigation: { goBack, navigate } }) => {
@@ -47,4 +46,10 @@ export const ForgotPassword = ({ navigation: { goBack, navigate } }) => {
       </Button>
     </Background>
   );
+};
+
+const validateEmail = (email) => {
+  const regularExpresion = /\S+@\S+\.\S+/;
+
+  return !email || email.length <= 0 || !regularExpresion.test(email);
 };

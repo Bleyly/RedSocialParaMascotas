@@ -11,12 +11,15 @@ import {
   TouchableRipple,
 } from "react-native-paper";
 import { users } from "../../../../data/users";
+import { useFireBaseContext } from "../../../config/firebase";
 import { names, titles } from "../../../screens";
 
 export const DrawerContent = (props) => {
   const {
     navigation: { navigate },
   } = props;
+
+  const { user, logout } = useFireBaseContext();
 
   return (
     <View style={{ flex: 1 }}>
@@ -26,8 +29,10 @@ export const DrawerContent = (props) => {
             <View style={{ flexDirection: "row", marginTop: 15 }}>
               <Avatar.Image source={users[0].photo} />
               <View style={{ marginLeft: 15 }}>
-                <Title style={styles.title}>{users[0].name}</Title>
-                <Caption style={styles.caption}>{users[0].email}</Caption>
+                <Title style={styles.title}>{user.displayName}</Title>
+                <Caption style={[styles.caption, styles.email]}>
+                  {user.email}
+                </Caption>
               </View>
             </View>
 
@@ -68,7 +73,7 @@ export const DrawerContent = (props) => {
       </DrawerContentScrollView>
       <Drawer.Section>
         <Divider />
-        <TouchableRipple onPress={() => navigate(names.launch)}>
+        <TouchableRipple onPress={logout}>
           <Drawer.Item icon="exit-to-app" label="Cerrar Sesión" />
         </TouchableRipple>
       </Drawer.Section>
@@ -87,6 +92,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 3,
     fontWeight: "bold",
+  },
+  email: {
+    fontSize: 10,
   },
   caption: {
     fontSize: 14,
