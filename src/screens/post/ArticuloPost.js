@@ -1,10 +1,11 @@
 import { AntDesign } from "@expo/vector-icons";
 import React, { useRef } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Avatar, Button, TextInput, Title } from "react-native-paper";
+import { Button, TextInput, Title } from "react-native-paper";
 import { names } from "../names";
 import { users } from "../../../data/users";
 import { PostPhoto, ProgressBar } from "../../components/Post";
+import { UserInfo } from "../../components";
 
 export const ArticuloPost = ({ navigation: { goBack, navigate } }) => {
   const descriptionRef = useRef();
@@ -22,10 +23,7 @@ export const ArticuloPost = ({ navigation: { goBack, navigate } }) => {
       <ProgressBar progress={0.5} />
 
       <View style={styles.container}>
-        <View style={styles.userInfo}>
-          <Avatar.Image source={users[0].photo} style={styles.avatar} />
-          <Title style={styles.username}>{users[0].name}</Title>
-        </View>
+        <UserInfo image={users[0].photo} name={users[0].name} />
 
         <View style={styles.form}>
           <TextInput
@@ -93,9 +91,6 @@ const styles = StyleSheet.create({
   back: { marginTop: 5 },
   title: { fontSize: 24, marginLeft: 24 },
   container: { paddingLeft: 16, paddingRight: 16 },
-  userInfo: { flexDirection: "row", alignItems: "center" },
-  avatar: { marginTop: 16 },
-  username: { marginLeft: 16 },
   end: { position: "absolute", bottom: 32, right: 16 },
   form: { marginTop: 16 },
   row: {
