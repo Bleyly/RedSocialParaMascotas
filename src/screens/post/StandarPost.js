@@ -46,12 +46,14 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     marginTop: 8,
+    backgroundColor: "white",
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 16,
     marginBottom: 12,
+    marginTop: 12,
   },
   back: { marginTop: 5 },
   title: { fontSize: 24, marginLeft: 24 },
