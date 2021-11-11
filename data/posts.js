@@ -11,7 +11,7 @@ export const posts = [
     ],
     tag: "post",
     likes: Number((Math.random() * 10000).toFixed(0)),
-    comment: 3,
+    comment: Number((Math.random() * 10000).toFixed(0)),
   },
   {
     _id: 2,
@@ -25,7 +25,7 @@ export const posts = [
     ],
     tag: "post",
     likes: Number((Math.random() * 10000).toFixed(0)),
-    comment: 3,
+    comment: Number((Math.random() * 10000).toFixed(0)),
   },
   {
     _id: 3,
@@ -39,7 +39,7 @@ export const posts = [
     ],
     tag: "post",
     likes: Number((Math.random() * 10000).toFixed(0)),
-    comment: 3,
+    comment: Number((Math.random() * 10000).toFixed(0)),
   },
   {
     _id: 4,
@@ -53,7 +53,7 @@ export const posts = [
     ],
     tag: "post",
     likes: Number((Math.random() * 10000).toFixed(0)),
-    comment: 3,
+    comment: Number((Math.random() * 10000).toFixed(0)),
   },
   {
     _id: 5,
@@ -67,7 +67,7 @@ export const posts = [
     ],
     tag: "post",
     likes: Number((Math.random() * 10000).toFixed(0)),
-    comment: 3,
+    comment: Number((Math.random() * 10000).toFixed(0)),
   },
   {
     _id: 6,
@@ -81,6 +81,6 @@ export const posts = [
     ],
     tag: "post",
     likes: Number((Math.random() * 10000).toFixed(0)),
-    comment: 3,
+    comment: Number((Math.random() * 10000).toFixed(0)),
   },
 ];
