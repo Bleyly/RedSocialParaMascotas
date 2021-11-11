@@ -67,11 +67,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 8,
+    backgroundColor: "white",
   },
   title: {
     fontSize: 24,
     marginLeft: 16,
     marginBottom: 12,
+    marginTop: 12,
   },
   options: {
     flex: 1,

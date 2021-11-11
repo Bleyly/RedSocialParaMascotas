@@ -1,11 +1,12 @@
 import { AntDesign } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { Avatar, Button, TextInput, Title } from "react-native-paper";
+import { Button, TextInput, Title } from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
 import { animals } from "../../../data/animals";
 import { races } from "../../../data/races";
 import { users } from "../../../data/users";
+import { UserInfo } from "../../components";
 import { PostPhoto, ProgressBar } from "../../components/Post";
 import { names } from "../names";
 
@@ -31,10 +32,7 @@ export const VenderPost = ({ navigation: { goBack, navigate } }) => {
       <ProgressBar progress={0.5} />
 
       <View style={styles.container}>
-        <View style={styles.userInfo}>
-          <Avatar.Image source={users[0].photo} style={styles.avatar} />
-          <Title style={styles.username}>{users[0].name}</Title>
-        </View>
+        <UserInfo image={users[0].photo} name={users[0].name} />
 
         <View style={styles.form}>
           <TextInput
@@ -117,19 +115,18 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     marginTop: 8,
+    backgroundColor: "white",
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 16,
     marginBottom: 12,
+    marginTop: 12,
   },
   back: { marginTop: 5 },
   title: { fontSize: 24, marginLeft: 24 },
   container: { paddingLeft: 16, paddingRight: 16 },
-  userInfo: { flexDirection: "row", alignItems: "center" },
-  avatar: { marginTop: 16 },
-  username: { marginLeft: 16 },
   end: { position: "absolute", bottom: 32, right: 16 },
   form: { marginTop: 16 },
   row: {

@@ -2,10 +2,11 @@ import { AntDesign } from "@expo/vector-icons";
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Avatar, Button, TextInput, Title } from "react-native-paper";
+import { Button, TextInput, Title } from "react-native-paper";
 import { names } from "../names";
 import { users } from "../../../data/users";
 import { PostPhoto, ProgressBar } from "../../components/Post";
+import { UserInfo } from "../../components";
 
 export const StandarPost = ({ navigation: { goBack, navigate } }) => {
   return (
@@ -19,10 +20,7 @@ export const StandarPost = ({ navigation: { goBack, navigate } }) => {
       <ProgressBar progress={0.5} />
 
       <View style={styles.container}>
-        <View style={styles.userInfo}>
-          <Avatar.Image source={users[0].photo} style={styles.avatar} />
-          <Title style={styles.username}>{users[0].name}</Title>
-        </View>
+        <UserInfo image={users[0].photo} name={users[0].name} />
 
         <TextInput
           mode="outlined"
@@ -48,19 +46,18 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     marginTop: 8,
+    backgroundColor: "white",
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 16,
     marginBottom: 12,
+    marginTop: 12,
   },
   back: { marginTop: 5 },
   title: { fontSize: 24, marginLeft: 24 },
   container: { paddingLeft: 16, paddingRight: 16 },
-  userInfo: { flexDirection: "row", alignItems: "center" },
-  avatar: { marginTop: 16 },
-  username: { marginLeft: 16 },
   textarea: { marginTop: 16, height: 150 },
   end: { position: "absolute", bottom: 32, right: 16 },
 });
