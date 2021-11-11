@@ -2,7 +2,7 @@ export const users = [
   {
     _id: 1,
     username: `@user1`,
-    name: `name1 surname1`,
+    name: `Manuel Marti`,
     email: `user1@gmail.com`,
     password: "Aa!12345",
     photo: require("../assets/avatar.jpg"),
@@ -13,7 +13,7 @@ export const users = [
   {
     _id: 2,
     username: `@user2`,
-    name: `name2 surname2`,
+    name: `Pablo Guzman`,
     email: `user2@gmail.com`,
     password: "Aa!12345",
     photo: require("../assets/avatar.jpg"),
@@ -24,7 +24,7 @@ export const users = [
   {
     _id: 3,
     username: `@user3`,
-    name: `name3 surname3`,
+    name: `Bonifacio Casas`,
     email: `user3@gmail.com`,
     password: "Aa!12345",
     photo: require("../assets/avatar.jpg"),
