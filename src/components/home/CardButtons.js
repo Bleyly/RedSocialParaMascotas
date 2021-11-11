@@ -1,33 +1,61 @@
+import {
+  AntDesign,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import React, { useState } from "react";
-import { Pressable } from 'react-native';
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { View } from "react-native";
 
-// Arrow que nos permite dar las configuraciones al boton me gusta  
-export const LikeButton = () => {
-    const [liked, setLiked] = useState(false);
-    
-      return (
-        <Pressable onPress={() => setLiked((isLiked) => !isLiked)}>
-          <MaterialCommunityIcons
-            name={liked ? "heart" : "heart-outline"}
-            size={32}
-            color={liked ? "red" : "black"}
+export const CardButtons = ({ liked, setLiked, saved, setSaved }) => {
+  return (
+    <View
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+        margin: 16,
+      }}
+    >
+      <View style={{ flexDirection: "row" }}>
+        {liked ? (
+          <AntDesign
+            name="heart"
+            size={24}
+            onPress={() => setLiked(false)}
+            color="red"
           />
-        </Pressable>
-      );
-    };
+        ) : (
+          <AntDesign
+            name="hearto"
+            size={24}
+            onPress={() => setLiked(true)}
+            color="black"
+          />
+        )}
 
-// Arrow que nos permite dar las configuraciones al boton bookmark  
-export const BookmarkButton = () => {
-    const [Saved, setSaved] = useState(false);
-    
-      return (
-        <Pressable onPress={() => setSaved((isSaved) => !isSaved)}>
-          <MaterialCommunityIcons
-            name={Saved ? "bookmark" : "bookmark-outline"}
-            size={32}
-            color={Saved ? "blue" : "black"}
+        <MaterialCommunityIcons
+          name="comment-text-outline"
+          size={24}
+          style={{ marginLeft: 8 }}
+        />
+        <AntDesign name="sharealt" size={24} style={{ marginLeft: 8 }} />
+      </View>
+      <View>
+        {saved ? (
+          <Ionicons
+            name="bookmark"
+            size={24}
+            onPress={() => setSaved(false)}
+            color="#5F89FE"
           />
-        </Pressable>
-      );
-    };
+        ) : (
+          <Ionicons
+            name="bookmark-outline"
+            size={24}
+            onPress={() => setSaved(true)}
+            color="black"
+          />
+        )}
+      </View>
+    </View>
+  );
+};
