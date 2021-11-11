@@ -38,7 +38,7 @@ const theme = {
   ...NavigationDefaultTheme,
   colors: {
     ...NavigationDefaultTheme.colors,
-    background: PaperDefaultTheme.colors.background,
+    background: "#c6c6c6",
     notification: PaperDefaultTheme.colors.notification,
     primary: PaperDefaultTheme.colors.primary,
     text: PaperDefaultTheme.colors.text,

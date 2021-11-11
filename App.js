@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { LogBox, StatusBar, StyleSheet, View } from "react-native";
+import React from "react";
+import { LogBox, StyleSheet, View } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import { Routes } from "./src/components/navigation";
 import { FireBaseProvider } from "./src/config/firebase";
+import Constants from "expo-constants";
 
 // Supresss known issue of firebase
 LogBox.ignoreLogs(["AsyncStorage has been extracted from react-native core"]);
@@ -21,7 +22,7 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: StatusBar.currentHeight,
+    marginTop: Constants.statusBarHeight,
     flex: 1,
   },
 });

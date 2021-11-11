@@ -1,17 +1,27 @@
 import React from "react";
-import { View } from "react-native";
-import { Text } from "react-native-paper";
+import { ScrollView } from "react-native";
+import { Card } from "../components/home";
+import { posts } from "../../data/posts";
+import { users } from "../../data/users";
 
 export const Home = () => {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Inicio</Text>
-    </View>
+    <ScrollView>
+      {posts.map((post) => {
+        const user = users.find((user) => user._id === post.userId);
+        return (
+          <Card
+            key={post._id}
+            style={{ marginTop: 8 }}
+            avatar={user.photo}
+            name={user.name}
+            description={post.description}
+            photos={post.photos}
+            likes={post.likes}
+            comments={post.comment}
+          />
+        );
+      })}
+    </ScrollView>
   );
 };
