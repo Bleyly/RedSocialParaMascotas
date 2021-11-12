@@ -1,5 +1,5 @@
 import { AntDesign } from "@expo/vector-icons";
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Button, TextInput, Title } from "react-native-paper";
@@ -7,8 +7,30 @@ import { names } from "../names";
 import { users } from "../../../data/users";
 import { PostPhoto, ProgressBar } from "../../components/Post";
 import { UserInfo } from "../../components";
+import { useFireBaseContext } from "../../config/firebase";
+import { photos } from "../../../data/photos";
+import { useDataContext } from "../../../data/dataContext";
 
 export const StandarPost = ({ navigation: { goBack, navigate } }) => {
+  const [description, setDescription] = useState("");
+
+  const { user } = useFireBaseContext();
+  const { addPost, posts } = useDataContext();
+
+  const handleSave = () => {
+    addPost({
+      _id: posts.length + 1,
+      userId: user.uid,
+      description: description.trim(),
+      photos: [photos[(Math.random() * 4).toFixed(0)]],
+      tag: "post",
+      likes: Number((Math.random() * 10000).toFixed(0)),
+      comment: Number((Math.random() * 10000).toFixed(0)),
+    });
+
+    navigate(names.home);
+  };
+
   return (
     <View style={styles.screen}>
       <View style={styles.header}>
@@ -20,22 +42,20 @@ export const StandarPost = ({ navigation: { goBack, navigate } }) => {
       <ProgressBar progress={0.5} />
 
       <View style={styles.container}>
-        <UserInfo image={users[0].photo} name={users[0].name} />
+        <UserInfo image={users[0].photo} name={user.displayName} />
 
         <TextInput
           mode="outlined"
           multiline={true}
           placeholder="¿Qué estás pensando?"
           style={styles.textarea}
+          value={description}
+          onChangeText={setDescription}
         />
 
         <PostPhoto />
       </View>
-      <Button
-        mode="contained"
-        onPress={() => navigate(names.home)}
-        style={styles.end}
-      >
+      <Button mode="contained" onPress={handleSave} style={styles.end}>
         Finalizar
       </Button>
     </View>

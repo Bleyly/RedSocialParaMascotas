@@ -10,6 +10,7 @@ import {
   Title,
   TouchableRipple,
 } from "react-native-paper";
+import { useDataContext } from "../../../../data/dataContext";
 import { users } from "../../../../data/users";
 import { useFireBaseContext } from "../../../config/firebase";
 import { names, titles } from "../../../screens";
@@ -20,6 +21,11 @@ export const DrawerContent = (props) => {
   } = props;
 
   const { user, logout } = useFireBaseContext();
+  const { removeUser } = useDataContext();
+
+  const handleLogout = () => {
+    logout().then(removeUser);
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -73,7 +79,7 @@ export const DrawerContent = (props) => {
       </DrawerContentScrollView>
       <Drawer.Section>
         <Divider />
-        <TouchableRipple onPress={logout}>
+        <TouchableRipple onPress={handleLogout}>
           <Drawer.Item icon="exit-to-app" label="Cerrar Sesión" />
         </TouchableRipple>
       </Drawer.Section>

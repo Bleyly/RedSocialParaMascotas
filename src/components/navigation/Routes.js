@@ -8,13 +8,25 @@ import { LoginNavigation } from "./LoginNavigation";
 import { DrawerNavigation } from "./drawer/DrawerNavigation";
 import { auth, useFireBaseContext } from "../../config/firebase";
 import { onAuthStateChanged } from "@firebase/auth";
+import { users } from "../../../data/users";
+import { useDataContext } from "../../../data/dataContext";
 
 export const Routes = () => {
   const [initializing, setInitializing] = useState(true);
   const { user, setUser } = useFireBaseContext();
 
+  const { addUser } = useDataContext();
+
   const authStateChanged = (user) => {
     setUser(user);
+
+    if (user && !users.some((u) => u._id === user.uid && user.displayName)) {
+      addUser({
+        _id: user.uid,
+        name: user.displayName,
+        photo: require("../../../assets/avatar.jpg"),
+      });
+    }
 
     if (initializing) {
       setInitializing(false);
