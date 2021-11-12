@@ -1,10 +1,10 @@
 export const races = [
   {
     label: "Viralata",
-    value: 1,
+    value: "Viralata",
   },
   {
     label: "Puro",
-    value: 2,
+    value: "Puro",
   },
 ];

@@ -1,14 +1,14 @@
 export const animals = [
   {
     label: "Gato",
-    value: 1,
+    value: "Gato",
   },
   {
     label: "Perro",
-    value: 2,
+    value: "Perro",
   },
   {
     label: "Ganado",
-    value: 3,
+    value: "Ganado",
   },
 ];
