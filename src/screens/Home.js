@@ -1,10 +1,11 @@
 import React from "react";
 import { ScrollView } from "react-native";
 import { Card } from "../components/home";
-import { posts } from "../../data/posts";
-import { users } from "../../data/users";
+import { useDataContext } from "../../data/dataContext";
 
 export const Home = () => {
+  const { posts, users } = useDataContext();
+
   return (
     <ScrollView>
       {posts.map((post) => {

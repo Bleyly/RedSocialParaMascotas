@@ -6,11 +6,14 @@ import { names } from "../names";
 import { users } from "../../../data/users";
 import { PostPhoto, ProgressBar } from "../../components/Post";
 import { UserInfo } from "../../components";
+import { useFireBaseContext } from "../../config/firebase";
 
 export const ArticuloPost = ({ navigation: { goBack, navigate } }) => {
   const descriptionRef = useRef();
   const quantityRef = useRef();
   const priceRef = useRef();
+
+  const { user } = useFireBaseContext();
 
   return (
     <View style={styles.screen}>
@@ -23,7 +26,7 @@ export const ArticuloPost = ({ navigation: { goBack, navigate } }) => {
       <ProgressBar progress={0.5} />
 
       <View style={styles.container}>
-        <UserInfo image={users[0].photo} name={users[0].name} />
+        <UserInfo image={users[0].photo} name={user.displayName} />
 
         <View style={styles.form}>
           <TextInput
