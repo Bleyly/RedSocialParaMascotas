@@ -2,10 +2,6 @@ import React from "react";
 import { View, StyleSheet, ScrollView, Text } from "react-native";
 import { Chip } from "react-native-paper";
 
-// <Chip icon="information" onPress={() => console.log("Pressed")}>
-// 	Example Chip
-// </Chip>;
-
 const Chips = () => (
 	<ScrollView
 		style={styles.container}
@@ -44,8 +40,6 @@ export const styles = StyleSheet.create({
 		flex: 1,
 		marginTop: 8,
 		backgroundColor: "#F9F9F9",
-
-		// alignItems: "center",
 	},
 	row: {
 		flexDirection: "row",
