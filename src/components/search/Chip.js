@@ -1,59 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, ScrollView, Text } from "react-native";
 import { Chip } from "react-native-paper";
 
-const Chips = () => (
-	<ScrollView
-		style={styles.container}
-		contentContainerStyle={{ alignItems: "center" }}
-	>
-		<View style={styles.row}>
-			<Chip onPress={() => console.log("Aceptar")} style={styles.chip}>
-				<Text style={styles.chipText}>Todo</Text>
-			</Chip>
+const categories = ["Todos", "Publicación", "Adopción", "Artículo", "Venta"];
 
-			<Chip style={styles.chip}>
-				<Text style={styles.chipText}>Publicación</Text>
-			</Chip>
+const Chips = () => {
+  const [selected, setSelected] = useState(categories[0]);
 
-			<Chip style={styles.chip}>
-				<Text style={styles.chipText}>Adopción</Text>
-			</Chip>
-			<Chip style={styles.chip}>
-				<Text style={styles.chipText}>Articulo</Text>
-			</Chip>
-			<Chip style={styles.chip}>
-				<Text style={styles.chipText}>Venta</Text>
-			</Chip>
-			<Chip style={styles.chip}>
-				<Text style={styles.chipText}>Cachorros</Text>
-			</Chip>
-			<Chip style={styles.chip}>
-				<Text style={styles.chipText}>Aves</Text>
-			</Chip>
-		</View>
-	</ScrollView>
-);
+  return (
+    <View style={styles.container}>
+      {categories.map((category, index) => (
+        <Chip
+          key={index}
+          style={styles.chip}
+          selected={category === selected}
+          onPress={() => setSelected(category)}
+        >
+          {category}
+        </Chip>
+      ))}
+    </View>
+  );
+};
 
-export const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		marginTop: 8,
-		backgroundColor: "#F9F9F9",
-	},
-	row: {
-		flexDirection: "row",
-		flexWrap: "wrap",
-		paddingHorizontal: 12,
-	},
-	chip: {
-		backgroundColor: "#FFFFFF",
-		borderColor: "#B2B2B2",
-		margin: 4,
-	},
-	chipText: {
-		color: "#000000",
-	},
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginTop: 8,
+    marginBottom: 8,
+  },
+  chip: { height: 32, marginRight: 4, marginTop: 4 },
 });
 
 export default Chips;
