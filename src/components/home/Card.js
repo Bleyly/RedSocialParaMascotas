@@ -53,7 +53,12 @@ const styles = StyleSheet.create({
   },
   userInfo: { marginLeft: 16 },
   description: { margin: 16 },
-  image: { width: "100%", height: 360 },
+  image: {
+    width: "100%",
+    height: 360,
+    borderColor: "#e0e0e0",
+    borderWidth: 1,
+  },
   row: { flexDirection: "row" },
   bold: { fontWeight: "bold" },
   textContainer: {
