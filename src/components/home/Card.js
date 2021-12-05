@@ -5,19 +5,19 @@ import { UserInfo } from "../UserInfo";
 import { CardButtons } from "./CardButtons";
 
 export const Card = ({
-  style,
-  avatar,
-  name,
-  description,
-  photos,
-  likes,
-  comments,
+  post: {
+    user: { name, photo: avatar },
+    description,
+    photos,
+    likes,
+    comment,
+  },
 }) => {
   const [liked, setLiked] = useState(false);
   const [saved, setSaved] = useState(false);
 
   return (
-    <View style={[styles.container, style]}>
+    <View style={styles.container}>
       <UserInfo style={styles.userInfo} image={avatar} name={name} />
 
       <Text style={styles.description}>{description}</Text>
@@ -30,7 +30,7 @@ export const Card = ({
           <Text style={styles.bold}> Me gusta</Text>
         </View>
         <View style={styles.row}>
-          <Text>{comments}</Text>
+          <Text>{comment}</Text>
           <Text style={styles.bold}> Comentarios</Text>
         </View>
       </View>
@@ -50,6 +50,7 @@ export const Card = ({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
+    marginTop: 8,
   },
   userInfo: { marginLeft: 16 },
   description: { margin: 16 },
