@@ -63,7 +63,7 @@ export const DrawerContent = (props) => {
           <TouchableRipple onPress={() => navigate(names.home)}>
             <Drawer.Item icon="home-outline" label={titles[names.home]} />
           </TouchableRipple>
-          <TouchableRipple onPress={() => console.log("pressed")}>
+          <TouchableRipple onPress={() => navigate(names.profile)}>
             <Drawer.Item icon="account-outline" label="Perfil" />
           </TouchableRipple>
           <TouchableRipple onPress={() => console.log("pressed")}>

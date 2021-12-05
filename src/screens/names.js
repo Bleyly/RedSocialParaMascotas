@@ -17,10 +17,13 @@ export const names = Object.freeze({
 
   // search
   search: "Search",
+
+  profile: "Profile",
 });
 
 export const titles = Object.freeze({
   [names.home]: "Inicio",
   [names.post]: "Publicar",
   [names.search]: "Buscar",
+  [names.profile]: "Perfil",
 });
