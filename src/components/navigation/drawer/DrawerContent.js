@@ -13,6 +13,7 @@ import {
 import { useDataContext } from "../../../../data/dataContext";
 import { users } from "../../../../data/users";
 import { useFireBaseContext } from "../../../config/firebase";
+import { profileTabs } from "../../../helpers/profileTabs";
 import { names, titles } from "../../../screens";
 
 export const DrawerContent = (props) => {
@@ -63,10 +64,18 @@ export const DrawerContent = (props) => {
           <TouchableRipple onPress={() => navigate(names.home)}>
             <Drawer.Item icon="home-outline" label={titles[names.home]} />
           </TouchableRipple>
-          <TouchableRipple onPress={() => console.log("pressed")}>
+          <TouchableRipple
+            onPress={() =>
+              navigate(names.profile, { tab: profileTabs.publishedPosts })
+            }
+          >
             <Drawer.Item icon="account-outline" label="Perfil" />
           </TouchableRipple>
-          <TouchableRipple onPress={() => console.log("pressed")}>
+          <TouchableRipple
+            onPress={() =>
+              navigate(names.profile, { tab: profileTabs.savedPosts })
+            }
+          >
             <Drawer.Item icon="bookmark-outline" label="Guardados" />
           </TouchableRipple>
           <TouchableRipple onPress={() => console.log("pressed")}>
