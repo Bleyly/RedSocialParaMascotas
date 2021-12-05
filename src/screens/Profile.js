@@ -3,15 +3,20 @@ import { StyleSheet, View } from "react-native";
 import { useFireBaseContext } from "../config/firebase";
 import { Tabs } from "../components/profile/Tabs";
 import { UserProfileInfo } from "../components/profile/UserProfileInfo";
+import { profileTabs } from "../helpers/profileTabs";
 
-export const Profile = () => {
+export const Profile = ({
+  route: {
+    params: { tab },
+  },
+}) => {
   const { user } = useFireBaseContext();
 
   return (
     <View style={styles.container}>
       <UserProfileInfo user={user} />
 
-      <Tabs />
+      <Tabs tab={tab} />
     </View>
   );
 };

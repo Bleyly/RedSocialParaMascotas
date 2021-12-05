@@ -1,21 +1,21 @@
 import { Ionicons } from "@expo/vector-icons";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, ScrollView } from "react-native";
 import { TouchableRipple, DefaultTheme } from "react-native-paper";
 import { photos } from "../../../data/photos";
 import { posts } from "../../../data/posts";
 import { users } from "../../../data/users";
+import { profileTabs } from "../../helpers/profileTabs";
 import { Cards } from "../Cards";
 import { ImagesGrid } from "../ImagesGrid";
 
-const tabs = {
-  publishedPosts: "published posts",
-  savedPosts: "saved posts",
-};
-
-export const Tabs = () => {
+export const Tabs = ({ tab }) => {
   const scrollRef = useRef();
-  const [selectedTab, setSelectedTab] = useState(tabs.publishedPosts);
+  const [selectedTab, setSelectedTab] = useState(undefined);
+
+  useEffect(() => {
+    setSelectedTab(tab);
+  }, [tab]);
 
   const changeTab = (tab) => {
     scrollRef.current?.scrollTo({ y: 0, animated: true });
@@ -42,13 +42,13 @@ export const Tabs = () => {
         }}
       >
         <TouchableRipple
-          onPress={() => changeTab(tabs.publishedPosts)}
+          onPress={() => changeTab(profileTabs.publishedPosts)}
           style={{
             flexGrow: 1,
             justifyContent: "center",
             alignItems: "center",
             padding: 8,
-            borderBottomColor: isActive(tabs.publishedPosts)
+            borderBottomColor: isActive(profileTabs.publishedPosts)
               ? DefaultTheme.colors.primary
               : "white",
             borderBottomWidth: 1,
@@ -58,20 +58,20 @@ export const Tabs = () => {
             name="grid-outline"
             size={28}
             color={
-              isActive(tabs.publishedPosts)
+              isActive(profileTabs.publishedPosts)
                 ? DefaultTheme.colors.primary
                 : "black"
             }
           />
         </TouchableRipple>
         <TouchableRipple
-          onPress={() => changeTab(tabs.savedPosts)}
+          onPress={() => changeTab(profileTabs.savedPosts)}
           style={{
             flexGrow: 1,
             justifyContent: "center",
             alignItems: "center",
             padding: 8,
-            borderBottomColor: isActive(tabs.savedPosts)
+            borderBottomColor: isActive(profileTabs.savedPosts)
               ? DefaultTheme.colors.primary
               : "white",
             borderBottomWidth: 1,
@@ -81,13 +81,15 @@ export const Tabs = () => {
             name="bookmark-outline"
             size={28}
             color={
-              isActive(tabs.savedPosts) ? DefaultTheme.colors.primary : "black"
+              isActive(profileTabs.savedPosts)
+                ? DefaultTheme.colors.primary
+                : "black"
             }
           />
         </TouchableRipple>
       </View>
       <ScrollView ref={scrollRef} style={{ backgroundColor: "#e0e0e0" }}>
-        {selectedTab === tabs.publishedPosts ? (
+        {selectedTab === profileTabs.publishedPosts ? (
           <Cards
             posts={posts.map((post) => {
               const user = users.find((user) => user._id === post.userId);

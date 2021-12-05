@@ -34,7 +34,10 @@ export const DrawerNavigation = () => {
       <Drawer.Screen
         name={names.profile}
         component={Profile}
-        options={{ title: titles[names.profile] }}
+        options={{
+          title: titles[names.profile],
+          unmountOnBlur: true,
+        }}
       />
     </Drawer.Navigator>
   );

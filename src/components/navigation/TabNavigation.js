@@ -31,6 +31,7 @@ export const TabNavigation = () => {
         options={{
           title: titles[names.home],
           tabBarIcon: (props) => <Entypo name="home" {...props} />,
+          unmountOnBlur: true,
         }}
       />
       <Tab.Screen
@@ -39,6 +40,7 @@ export const TabNavigation = () => {
         options={{
           title: titles[names.search],
           tabBarIcon: (props) => <FontAwesome name="search" {...props} />,
+          unmountOnBlur: true,
         }}
       />
     </Tab.Navigator>
