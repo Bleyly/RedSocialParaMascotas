@@ -5,6 +5,7 @@ import { getHeaderTitle } from "../../../helpers/getHeaderTitle";
 import { names, titles } from "../../../screens";
 import { Chats } from "../../../screens/chat/Chats";
 import { Profile } from "../../../screens/Profile";
+import { ChatNavigation } from "../ChatNavigation";
 import { TabNavigation } from "../TabNavigation";
 import { DrawerContent } from "./DrawerContent";
 
@@ -26,7 +27,7 @@ export const DrawerNavigation = () => {
 							<Appbar.Content title={title} />
 							<Appbar.Action
 								icon="chat"
-								onPress={() => navigate("chat")}
+								onPress={() => navigate("ChatNavigation")}
 							/>
 						</Appbar>
 					);
@@ -46,7 +47,7 @@ export const DrawerNavigation = () => {
 					unmountOnBlur: true,
 				}}
 			/>
-			<Drawer.Screen name="chat" component={Chats} />
+			<Drawer.Screen name="ChatNavigation" component={ChatNavigation} />
 		</Drawer.Navigator>
 	);
 };
