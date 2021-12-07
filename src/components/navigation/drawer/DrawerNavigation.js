@@ -4,6 +4,7 @@ import { Appbar } from "react-native-paper";
 import { PicturesProvider } from "../../../helpers/picturesContext";
 import { getHeaderTitle } from "../../../helpers/getHeaderTitle";
 import { names, titles } from "../../../screens";
+import { Chats } from "../../../screens/chat/Chats";
 import { Profile } from "../../../screens/Profile";
 import { ChatNavigation } from "../ChatNavigation";
 import { Camera } from "../../../screens/Camera";
@@ -13,7 +14,7 @@ import { DrawerContent } from "./DrawerContent";
 const Drawer = createDrawerNavigator();
 
 export const DrawerNavigation = () => {
-	return (
+  return (
     <PicturesProvider>
       <Drawer.Navigator
         initialRouteName="TabNavigation"
@@ -50,15 +51,15 @@ export const DrawerNavigation = () => {
           }}
         />
         <Drawer.Screen
-            name={names.camera}
-            component={Camera}
-            options={{
-              headerShown: false,
-              unmountOnBlur: true,
-            }}
-          />
+          name={names.camera}
+          component={Camera}
+          options={{
+            headerShown: false,
+            unmountOnBlur: true,
+          }}
+        />
         <Drawer.Screen name="ChatNavigation" component={ChatNavigation} />
       </Drawer.Navigator>
     </PicturesProvider>
-	);
+  );
 };
