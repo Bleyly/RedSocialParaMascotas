@@ -6,30 +6,28 @@ import { styles } from "./styles";
 import { names } from "../names";
 
 export const Launch = ({ navigation: { navigate } }) => {
-  return (
-    <Background>
-      <Logo />
+	return (
+		<Background>
+			<Logo />
 
-      <Title style={styles.title}>Nombre de la App</Title>
+			<Paragraph style={styles.paragraph}>
+				"Hasta el más pequeño de los animales es una obra maestra"
+			</Paragraph>
 
-      <Paragraph style={styles.paragraph}>
-        Inserta frase motivacional aqui
-      </Paragraph>
-
-      <Button
-        mode="contained"
-        style={styles.button}
-        onPress={() => navigate(names.login)}
-      >
-        Iniciar Sesión
-      </Button>
-      <Button
-        mode="outlined"
-        style={styles.button}
-        onPress={() => navigate(names.register)}
-      >
-        Registrarse
-      </Button>
-    </Background>
-  );
+			<Button
+				mode="contained"
+				style={styles.button}
+				onPress={() => navigate(names.login)}
+			>
+				Iniciar Sesión
+			</Button>
+			<Button
+				mode="outlined"
+				style={styles.button}
+				onPress={() => navigate(names.register)}
+			>
+				Registrarse
+			</Button>
+		</Background>
+	);
 };
