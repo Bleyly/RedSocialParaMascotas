@@ -1,12 +1,14 @@
 import React from "react";
 import { List, TouchableRipple } from "react-native-paper";
+import { usePicker } from "../../hooks/usePicker";
 import { names } from "../../screens";
 import { Icon } from "../Icon";
 
 export const PostPhoto = ({ navigate }) => {
+  const pickPicture = usePicker();
   return (
     <List.Section>
-      <TouchableRipple onPress={() => console.log("pressed")}>
+      <TouchableRipple onPress={() => pickPicture()}>
         <List.Item
           title="Foto/video"
           left={() => (
