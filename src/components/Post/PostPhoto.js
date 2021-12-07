@@ -1,8 +1,9 @@
 import React from "react";
 import { List, TouchableRipple } from "react-native-paper";
+import { names } from "../../screens";
 import { Icon } from "../Icon";
 
-export const PostPhoto = () => {
+export const PostPhoto = ({ navigate }) => {
   return (
     <List.Section>
       <TouchableRipple onPress={() => console.log("pressed")}>
@@ -16,7 +17,7 @@ export const PostPhoto = () => {
           )}
         />
       </TouchableRipple>
-      <TouchableRipple onPress={() => console.log("pressed")}>
+      <TouchableRipple onPress={() => navigate(names.camera)}>
         <List.Item
           title="Cámara"
           left={() => (
