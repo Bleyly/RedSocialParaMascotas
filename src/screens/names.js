@@ -19,6 +19,7 @@ export const names = Object.freeze({
   search: "Search",
 
   profile: "Profile",
+  camera: "Camera",
 });
 
 export const titles = Object.freeze({
