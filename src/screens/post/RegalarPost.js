@@ -11,9 +11,14 @@ import { users } from "../../../data/users";
 import { UserInfo } from "../../components";
 import { PostPhoto, ProgressBar } from "../../components/Post";
 import { useFireBaseContext } from "../../config/firebase";
+import { usePicturesContext } from "../../helpers/picturesContext";
 import { names } from "../names";
 
 export const RegalarPost = ({ navigation: { goBack, navigate } }) => {
+  const {
+    picturesState: [pictures, setPictures],
+  } = usePicturesContext();
+
   const ageRef = useRef();
   const quantityRef = useRef();
 
@@ -34,11 +39,13 @@ export const RegalarPost = ({ navigation: { goBack, navigate } }) => {
       _id: posts.length + 1,
       userId: user.uid,
       description: `Se regala ${animal} ${race} de ${age} meses llamado ${name.trim()}.`,
-      photos: [photos[(Math.random() * 4).toFixed(0)]],
+      photos: [...pictures],
       tag: "post",
       likes: Number((Math.random() * 10000).toFixed(0)),
       comment: Number((Math.random() * 10000).toFixed(0)),
     });
+
+    setPictures([]);
 
     navigate(names.home);
   };
@@ -116,7 +123,7 @@ export const RegalarPost = ({ navigation: { goBack, navigate } }) => {
           </View>
         </View>
 
-        <PostPhoto />
+        <PostPhoto navigate={navigate} />
       </View>
       <Button mode="contained" onPress={handleSave} style={styles.end}>
         Finalizar

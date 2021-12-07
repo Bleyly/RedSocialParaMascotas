@@ -7,8 +7,13 @@ import { users } from "../../../data/users";
 import { PostPhoto, ProgressBar } from "../../components/Post";
 import { UserInfo } from "../../components";
 import { useFireBaseContext } from "../../config/firebase";
+import { usePicturesContext } from "../../helpers/picturesContext";
 
 export const ArticuloPost = ({ navigation: { goBack, navigate } }) => {
+  const {
+    picturesState: [pictures, setPictures],
+  } = usePicturesContext();
+
   const descriptionRef = useRef();
   const quantityRef = useRef();
   const priceRef = useRef();
@@ -67,7 +72,7 @@ export const ArticuloPost = ({ navigation: { goBack, navigate } }) => {
           </View>
         </View>
 
-        <PostPhoto />
+        <PostPhoto navigate={navigate} />
       </View>
       <Button
         mode="contained"

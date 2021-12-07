@@ -11,9 +11,14 @@ import { users } from "../../../data/users";
 import { UserInfo } from "../../components";
 import { PostPhoto, ProgressBar } from "../../components/Post";
 import { useFireBaseContext } from "../../config/firebase";
+import { usePicturesContext } from "../../helpers/picturesContext";
 import { names } from "../names";
 
 export const VenderPost = ({ navigation: { goBack, navigate } }) => {
+  const {
+    picturesState: [pictures, setPictures],
+  } = usePicturesContext();
+
   const ageRef = useRef();
   const quantityRef = useRef();
   const priceRef = useRef();
@@ -38,11 +43,13 @@ export const VenderPost = ({ navigation: { goBack, navigate } }) => {
       description: `Se vende ${animal} ${race} de ${age} meses llamado ${name.trim()}.
       
 Precio: RD$ ${price}`,
-      photos: [photos[(Math.random() * 4).toFixed(0)]],
+      photos: [...pictures],
       tag: "post",
       likes: Number((Math.random() * 10000).toFixed(0)),
       comment: Number((Math.random() * 10000).toFixed(0)),
     });
+
+    setPictures([]);
 
     navigate(names.home);
   };
@@ -132,7 +139,7 @@ Precio: RD$ ${price}`,
           </View>
         </View>
 
-        <PostPhoto />
+        <PostPhoto navigate={navigate} />
       </View>
       <Button mode="contained" onPress={handleSave} style={styles.end}>
         Finalizar
