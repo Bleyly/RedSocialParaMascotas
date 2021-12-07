@@ -6,6 +6,7 @@ import { Icon } from "../Icon";
 
 export const PostPhoto = ({ navigate }) => {
   const pickPicture = usePicker();
+  
   return (
     <List.Section>
       <TouchableRipple onPress={() => pickPicture()}>
