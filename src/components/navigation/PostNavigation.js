@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { names } from "../../screens";
 import {
@@ -21,7 +21,7 @@ export const PostNavigation = () => {
       <Stack.Screen name={names.standardPost} component={StandarPost} />
       <Stack.Screen name={names.sellPost} component={VenderPost} />
       <Stack.Screen name={names.givePost} component={RegalarPost} />
-      <Stack.Screen name={names.articlePost} component={ArticuloPost} />
+      {/* <Stack.Screen name={names.articlePost} component={ArticuloPost} /> */}
     </Stack.Navigator>
   );
 };
