@@ -2,6 +2,7 @@
 import React, { useMemo } from "react";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 import {
   createUserWithEmailAndPassword,
   getAuth,
@@ -27,6 +28,7 @@ const firebaseConfig = {
 const firebase = initializeApp(firebaseConfig);
 export const auth = getAuth(firebase);
 export const db = getFirestore();
+export const storage = getStorage(firebase);
 
 // Firebase context
 const firebaseContext = createContext();
