@@ -24,7 +24,7 @@ export const ImagesGrid = ({ images }) => {
           key={index}
           onPress={() => setModal({ visible: true, image: images[index] })}
         >
-          <Image source={image} style={styles.image} />
+          <Image source={{ uri: image }} style={styles.image} />
         </TouchableWithoutFeedback>
       ))}
       <ShowImage modal={modal} setModal={setModal} />

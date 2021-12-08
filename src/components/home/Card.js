@@ -8,9 +8,9 @@ export const Card = ({
   post: {
     user: { name, photo: avatar },
     description,
-    photos,
+    pictures,
     likes,
-    comment,
+    comments,
   },
 }) => {
   const [liked, setLiked] = useState(false);
@@ -18,11 +18,15 @@ export const Card = ({
 
   return (
     <View style={styles.container}>
-      <UserInfo style={styles.userInfo} image={avatar} name={name} />
+      <UserInfo
+        style={styles.userInfo}
+        image={avatar ? { uri: avatar } : require("../../../assets/avatar.png")}
+        name={name}
+      />
 
       <Text style={styles.description}>{description}</Text>
 
-      <Image style={styles.image} source={photos[0]} />
+      <Image style={styles.image} source={{ uri: pictures[0] }} />
 
       <View style={styles.textContainer}>
         <View style={styles.row}>
@@ -30,7 +34,7 @@ export const Card = ({
           <Text style={styles.bold}> Me gusta</Text>
         </View>
         <View style={styles.row}>
-          <Text>{comment}</Text>
+          <Text>{comments.length}</Text>
           <Text style={styles.bold}> Comentarios</Text>
         </View>
       </View>
