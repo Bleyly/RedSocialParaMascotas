@@ -1,18 +1,22 @@
 import * as React from "react";
 import { Searchbar as PaperSearchbar } from "react-native-paper";
 
-const Searchbar = () => {
-	const [searchQuery, setSearchQuery] = React.useState("");
+const Searchbar = React.memo(({ setFilter }) => {
+  const [searchText, setSearchText] = React.useState("");
 
-	const onChangeSearch = (query) => setSearchQuery(query);
+  const handleSearch = () => {
+    setFilter((prevFilter) => ({ ...prevFilter, searchText }));
+  };
 
-	return (
-		<PaperSearchbar
-			placeholder="Search"
-			onChangeText={onChangeSearch}
-			value={searchQuery}
-		/>
-	);
-};
+  return (
+    <PaperSearchbar
+      onSubmitEditing={handleSearch}
+      placeholder="Search"
+      onChangeText={setSearchText}
+      value={searchText}
+      onIconPress={handleSearch}
+    />
+  );
+});
 
 export default Searchbar;
