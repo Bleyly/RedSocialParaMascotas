@@ -1,33 +1,40 @@
 import React, { Fragment } from "react";
 import { StyleSheet, View } from "react-native";
 import { Avatar, Caption, Paragraph, Title } from "react-native-paper";
-import { users } from "../../../data/users";
+import { useSelector } from "react-redux";
 
-export const UserProfileInfo = ({ user }) => {
+export const UserProfileInfo = () => {
+  const { name, photo, followers, following, description } = useSelector(
+    (state) => state.userState
+  );
   return (
     <Fragment>
       <View style={styles.userInfoSection}>
-        <Avatar.Image source={users[0].photo} />
+        <Avatar.Image
+          source={
+            photo ? { uri: photo } : require("../../../assets/avatar.png")
+          }
+        />
         <View style={{ marginLeft: 16 }}>
-          <Title>{user.displayName}</Title>
+          <Title>{name}</Title>
 
           <View style={styles.row}>
             <View style={styles.section}>
               <Paragraph style={[styles.paragraph, styles.caption]}>
-                {users[0].followers}
+                {followers}
               </Paragraph>
               <Caption style={styles.caption}>Seguidores</Caption>
             </View>
             <View style={styles.section}>
               <Paragraph style={[styles.paragraph, styles.caption]}>
-                {users[0].following}
+                {following}
               </Paragraph>
               <Caption style={styles.caption}>Seguidos</Caption>
             </View>
           </View>
         </View>
       </View>
-      <Paragraph style={{ marginLeft: 16 }}>{users[0].description}</Paragraph>
+      <Paragraph style={{ marginLeft: 16 }}>{description}</Paragraph>
     </Fragment>
   );
 };
