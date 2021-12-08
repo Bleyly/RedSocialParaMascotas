@@ -16,18 +16,6 @@ LogBox.ignoreLogs([
 ]);
 
 const App = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 7000);
-  }, []);
-
-  if (isLoading) {
-    return <Splash />;
-  }
-
   return (
     <ReduxProvider store={store}>
       <PaperProvider>
