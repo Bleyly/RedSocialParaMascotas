@@ -78,8 +78,13 @@ export const DrawerContent = (props) => {
           >
             <Drawer.Item icon="bookmark-outline" label="Guardados" />
           </TouchableRipple>
-          <TouchableRipple onPress={() => console.log("pressed")}>
-            <Drawer.Item icon="cog-outline" label="Configuración" />
+          <TouchableRipple 
+		  	onPress={() =>
+				navigate("SettingsNavigation", {
+					screen: names.settings,
+				})
+			}>
+            	<Drawer.Item icon="cog-outline" label="Configuración" />
           </TouchableRipple>
           <TouchableRipple onPress={() => console.log("pressed")}>
             <Drawer.Item icon="account-check-outline" label="Soporte" />
