@@ -1,11 +1,30 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { List, Title, TouchableRipple } from "react-native-paper";
+import { useDispatch, useSelector } from "react-redux";
 import { Icon } from "../../components/Icon";
 import { ProgressBar } from "../../components/Post";
+import { resetPassword } from "../../redux/users/userActions";
 import { names } from "../names";
 
 export const Settings = ({ navigation: { navigate } }) => {
+  const {
+    currentUser: { email },
+  } = useSelector((state) => state.userState);
+
+  const dispatch = useDispatch();
+  const handlePasswordReset = () => {
+    dispatch(
+      resetPassword(email, () => {
+        Alert.alert(
+          "Revise su correo",
+          "Se le ha enviado un correo con los pasos a seguir.",
+          [{ text: "OK", onPress: () => navigate(names.home) }]
+        );
+      })
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Title style={styles.title}>Configuración</Title>
@@ -24,7 +43,7 @@ export const Settings = ({ navigation: { navigate } }) => {
               )}
             />
           </TouchableRipple>
-          <TouchableRipple onPress={() => navigate(names.personal_information)}>
+          {/* <TouchableRipple onPress={() => navigate(names.personal_information)}>
             <List.Item
               title="Información Personal"
               left={() => (
@@ -34,7 +53,7 @@ export const Settings = ({ navigation: { navigate } }) => {
                 />
               )}
             />
-          </TouchableRipple>
+          </TouchableRipple> */}
           <TouchableRipple onPress={() => navigate(names.post_liked)}>
             <List.Item
               title="Publicación que te gustó"
@@ -46,7 +65,7 @@ export const Settings = ({ navigation: { navigate } }) => {
               )}
             />
           </TouchableRipple>
-          <TouchableRipple onPress={() => navigate(names.account_status)}>
+          <TouchableRipple onPress={handlePasswordReset}>
             <List.Item
               title="Cambiar Contraseña"
               left={() => (

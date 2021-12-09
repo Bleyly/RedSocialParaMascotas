@@ -19,7 +19,8 @@ import {
   updateDoc,
   where,
 } from "@firebase/firestore";
-import { auth, db } from "../../config/firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { auth, db, storage } from "../../config/firebase";
 import {
   CHATS_COLLECTION,
   MESSAGES_COLLECTION,
@@ -84,9 +85,11 @@ export const setUser = (user) => {
   };
 };
 
-export const resetPassword = (email) => {
+export const resetPassword = (email, callback) => {
   return async () => {
     await sendPasswordResetEmail(auth, email);
+
+    callback();
   };
 };
 
@@ -340,4 +343,63 @@ const createChat = async (currentUser, user) => {
   });
 
   return chatSnapshot.id;
+};
+
+export const updateProfile = (name, description, photo, callback) => {
+  return async (dispatch, getStore) => {
+    const {
+      userState: {
+        currentUser: { uid },
+        photo: currentPhoto,
+      },
+    } = getStore();
+
+    let url = photo;
+
+    if (photo && photo != currentPhoto) {
+      url = await savePhoto(uid, photo);
+    }
+
+    const profile = {
+      name,
+      description,
+      photo: url,
+    };
+
+    await updateDoc(doc(db, USERS_COLLECTION, uid), profile);
+
+    dispatch({ type: userTypes.updateProfile, payload: profile });
+    callback();
+  };
+};
+
+const savePhoto = async (userId, photo) => {
+  const path = `${userId}/avatar`;
+  const response = await fetch(photo);
+  const blob = await response.blob();
+  const storageRef = ref(storage, path);
+
+  await uploadBytes(storageRef, blob);
+
+  return getDownloadURL(storageRef);
+};
+
+export const getLikedPosts = () => {
+  return async (dispatch, getStore) => {
+    const {
+      userState: { liked },
+    } = getStore();
+
+    let likedPosts = (await getDocs(collection(db, POSTS_COLLECTION))).docs.map(
+      (post) => {
+        if (liked.includes(post.id)) {
+          return post.data().pictures[0];
+        }
+      }
+    );
+
+    likedPosts = likedPosts.filter((post) => post);
+
+    dispatch({ type: userTypes.getLiked, payload: likedPosts });
+  };
 };

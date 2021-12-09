@@ -12,6 +12,7 @@ const initialState = {
   liked: [],
   saved: [],
   chats: [],
+  likedPosts: [],
 };
 
 export const userReducer = (state = initialState, { type, payload }) => {
@@ -82,6 +83,10 @@ export const userReducer = (state = initialState, { type, payload }) => {
       });
 
       return { ...state, chats };
+    case userTypes.updateProfile:
+      return { ...state, ...payload };
+    case userTypes.getLiked:
+      return { ...state, likedPosts: payload };
     default:
       return state;
   }

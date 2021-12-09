@@ -14,11 +14,14 @@ export const Login = ({ navigation: { navigate } }) => {
 
   const passwordRef = useRef();
 
+  const [loading, setLoading] = useState(false);
+
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
+    setLoading(true);
     dispatch(login(email, password)).catch((error) => {
       if (error.code === "auth/user-not-found") {
         setError("Usuario no encontrado");
@@ -72,7 +75,12 @@ export const Login = ({ navigation: { navigate } }) => {
         </TouchableOpacity>
       </View>
 
-      <Button mode="contained" style={styles.button} onPress={handleLogin}>
+      <Button
+        mode="contained"
+        style={styles.button}
+        onPress={handleLogin}
+        loading={loading}
+      >
         Iniciar Sesión
       </Button>
 

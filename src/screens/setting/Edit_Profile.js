@@ -1,55 +1,100 @@
-import React, { useContext } from "react";
-import { Image, ScrollView, StyleSheet, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React, { useEffect, useState } from "react";
+import { Image, Keyboard, StyleSheet, View } from "react-native";
 import { TextInput, Button, Avatar } from "react-native-paper";
+import { names } from "../names";
+import { useDispatch, useSelector } from "react-redux";
+import { usePicturesContext } from "../../helpers/picturesContext";
+import { usePicker } from "../../hooks/usePicker";
+import { updateProfile } from "../../redux/users/userActions";
+import { profileTabs } from "../../helpers/profileTabs";
 
-export const Edit_Profile = () => {
-  const [text, setText] = React.useState("");
+export const Edit_Profile = ({ navigation: { navigate } }) => {
+  const {
+    picturesState: [pictures, setPictures],
+  } = usePicturesContext();
+
+  const dispatch = useDispatch();
+  const pickPicture = usePicker();
+
+  const {
+    photo,
+    name,
+    description,
+    currentUser: { uid },
+  } = useSelector((state) => state.userState);
+
+  const [loading, setLoading] = useState(false);
+  const [newName, setName] = useState(name);
+  const [newDescription, setDescription] = useState(description);
+
+  const handleSave = () => {
+    setLoading(true);
+    if (newName && newDescription) {
+      dispatch(
+        updateProfile(
+          newName,
+          newDescription,
+          pictures.length ? pictures[0].uri : photo,
+          () => {
+            setLoading(false);
+            navigate(names.profile, {
+              tab: profileTabs.publishedPosts,
+              userId: uid,
+            });
+          }
+        )
+      );
+    }
+  };
+
+  useEffect(() => {
+    const keyboardEvent = Keyboard.addListener("keyboardDidHide", () =>
+      Keyboard.dismiss()
+    );
+    return () => {
+      setPictures([]);
+      keyboardEvent.remove();
+    };
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.avatar}>
         <Avatar.Image
-          source={require("../../../assets/avatar.png")}
+          source={
+            pictures.length
+              ? { uri: pictures[0].uri }
+              : photo
+              ? { uri: photo }
+              : require("../../../assets/avatar.png")
+          }
           size={150}
         />
       </View>
-      <Button onPress={() => console.log("Pressed")}>
-        Cambiar foto del perfil
-      </Button>
+      <Button onPress={() => pickPicture()}>Cambiar foto del perfil</Button>
       <View style={styles.form}>
         <TextInput
           style={styles.formInput}
           mode="outlined"
           label="Nombre"
-          onSubmitEditing={() => ageRef.current.focus()}
-          returnKeyType="next"
-
-          // value={name}
-          // onChangeText={setName}
-        />
-        <TextInput
-          style={styles.formInput}
-          mode="outlined"
-          label="Nombre de Usuario"
-          onSubmitEditing={() => ageRef.current.focus()}
-          returnKeyType="next"
-
-          // value={name}
-          // onChangeText={setName}
+          value={newName}
+          onChangeText={setName}
         />
         <TextInput
           style={[styles.formInput, { height: 90 }]}
           multiline
           mode="outlined"
           label="Presentación"
-          onSubmitEditing={() => ageRef.current.focus()}
-          returnKeyType="next"
-
-          // value={name}
-          // onChangeText={setName}
+          value={newDescription}
+          onChangeText={setDescription}
         />
         <View style={styles.buttonContainer}>
-          <Button mode="contained" style={styles.button}>
+          <Button
+            mode="contained"
+            style={styles.button}
+            onPress={handleSave}
+            loading={loading}
+          >
             Guardar
           </Button>
         </View>
