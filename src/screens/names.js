@@ -20,6 +20,7 @@ export const names = Object.freeze({
 
   profile: "Profile",
   camera: "Camera",
+  comments: "Comments",
 });
 
 export const titles = Object.freeze({

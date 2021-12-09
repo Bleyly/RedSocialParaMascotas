@@ -1,21 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ScrollView } from "react-native";
-import { Card } from "../components/home";
-import { useDataContext } from "../../data/dataContext";
+import { useDispatch, useSelector } from "react-redux";
 import { Cards } from "../components/Cards";
+import { getPosts } from "../redux/posts/postActions";
 
 export const Home = () => {
-  const { posts, users } = useDataContext();
+  const dispatch = useDispatch();
+  const { posts } = useSelector((state) => state.postState);
+
+  useEffect(() => {
+    dispatch(getPosts());
+  }, []);
 
   return (
     <ScrollView>
-      <Cards
-        posts={posts.map((post) => {
-          const user = users.find((user) => user._id === post.userId);
-
-          return { ...post, user };
-        })}
-      />
+      <Cards posts={posts} />
     </ScrollView>
   );
 };

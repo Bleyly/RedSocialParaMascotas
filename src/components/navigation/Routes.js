@@ -6,26 +6,24 @@ import React, { useEffect, useState } from "react";
 import { DefaultTheme as PaperDefaultTheme } from "react-native-paper";
 import { LoginNavigation } from "./LoginNavigation";
 import { DrawerNavigation } from "./drawer/DrawerNavigation";
-import { auth, useFireBaseContext } from "../../config/firebase";
+import { auth } from "../../config/firebase";
 import { onAuthStateChanged } from "@firebase/auth";
-import { users } from "../../../data/users";
-import { useDataContext } from "../../../data/dataContext";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../redux/users/userActions";
+import { Splash } from "../../screens/Splash";
 
 export const Routes = () => {
   const [initializing, setInitializing] = useState(true);
-  const { user, setUser } = useFireBaseContext();
+  const [loadingUser, setLoadingUser] = useState(true);
 
-  const { addUser } = useDataContext();
+  const { currentUser } = useSelector((state) => state.userState, shallowEqual);
+  const dispatch = useDispatch();
 
   const authStateChanged = (user) => {
-    setUser(user);
-
-    if (user && !users.some((u) => u._id === user.uid && user.displayName)) {
-      addUser({
-        _id: user.uid,
-        name: user.displayName,
-        photo: require("../../../assets/avatar.jpg"),
-      });
+    if (user) {
+      dispatch(setUser(user)).then(() => loadingUser && setLoadingUser(false));
+    } else {
+      setLoadingUser(false);
     }
 
     if (initializing) {
@@ -39,9 +37,11 @@ export const Routes = () => {
     return subscriber;
   }, []);
 
-  return initializing ? null : (
+  return initializing || loadingUser ? (
+    <Splash />
+  ) : (
     <NavigationContainer theme={theme}>
-      {user ? <DrawerNavigation /> : <LoginNavigation />}
+      {currentUser ? <DrawerNavigation /> : <LoginNavigation />}
     </NavigationContainer>
   );
 };

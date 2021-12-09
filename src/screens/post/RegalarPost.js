@@ -2,17 +2,17 @@ import { AntDesign } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Button, TextInput, Title } from "react-native-paper";
+import { useDispatch, useSelector } from "react-redux";
 import DropDown from "react-native-paper-dropdown";
 import { animals } from "../../../data/animals";
-import { useDataContext } from "../../../data/dataContext";
-import { photos } from "../../../data/photos";
 import { races } from "../../../data/races";
 import { users } from "../../../data/users";
 import { UserInfo } from "../../components";
 import { PostPhoto, ProgressBar } from "../../components/Post";
-import { useFireBaseContext } from "../../config/firebase";
 import { usePicturesContext } from "../../helpers/picturesContext";
 import { names } from "../names";
+import { createPost } from "../../redux/posts/postActions";
+import { tags } from "../../helpers/tags";
 
 export const RegalarPost = ({ navigation: { goBack, navigate } }) => {
   const {
@@ -31,23 +31,25 @@ export const RegalarPost = ({ navigation: { goBack, navigate } }) => {
   const [age, setAge] = useState();
   const [quantity, setQuantity] = useState();
 
-  const { user } = useFireBaseContext();
-  const { addPost, posts } = useDataContext();
+  const dispatch = useDispatch();
+  const { username, photo } = useSelector((state) => state.userState);
 
   const handleSave = () => {
-    addPost({
-      _id: posts.length + 1,
-      userId: user.uid,
-      description: `Se regala ${animal} ${race} de ${age} meses llamado ${name.trim()}.`,
-      photos: [...pictures],
-      tag: "post",
-      likes: Number((Math.random() * 10000).toFixed(0)),
-      comment: Number((Math.random() * 10000).toFixed(0)),
+    dispatch(
+      createPost(
+        {
+          description: `Se regala ${animal} ${race} de ${age} meses llamado ${name.trim()}.`,
+          tag: tags.adopt,
+          likes: 0,
+          comments: [],
+        },
+        pictures
+      )
+    ).then(() => {
+      setPictures([]);
+
+      navigate(names.home);
     });
-
-    setPictures([]);
-
-    navigate(names.home);
   };
 
   return (
@@ -61,7 +63,10 @@ export const RegalarPost = ({ navigation: { goBack, navigate } }) => {
       <ProgressBar progress={0.5} />
 
       <View style={styles.container}>
-        <UserInfo image={users[0].photo} name={user.displayName} />
+        <UserInfo
+          image={photo ? { uri: photo } : require("../../../assets/avatar.png")}
+          name={username}
+        />
 
         <View style={styles.form}>
           <TextInput

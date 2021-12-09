@@ -10,10 +10,9 @@ import {
   Title,
   TouchableRipple,
 } from "react-native-paper";
-import { useDataContext } from "../../../../data/dataContext";
-import { users } from "../../../../data/users";
-import { useFireBaseContext } from "../../../config/firebase";
+import { useDispatch, useSelector } from "react-redux";
 import { profileTabs } from "../../../helpers/profileTabs";
+import { logout } from "../../../redux/users/userActions";
 import { names, titles } from "../../../screens";
 
 export const DrawerContent = (props) => {
@@ -21,11 +20,13 @@ export const DrawerContent = (props) => {
     navigation: { navigate },
   } = props;
 
-  const { user, logout } = useFireBaseContext();
-  const { removeUser } = useDataContext();
+  const dispatch = useDispatch();
+  const { name, currentUser, photo, followers, following } = useSelector(
+    (state) => state.userState
+  );
 
   const handleLogout = () => {
-    logout().then(removeUser);
+    dispatch(logout());
   };
 
   return (
@@ -34,11 +35,17 @@ export const DrawerContent = (props) => {
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
             <View style={{ flexDirection: "row", marginTop: 15 }}>
-              <Avatar.Image source={users[0].photo} />
+              <Avatar.Image
+                source={
+                  photo
+                    ? { uri: photo }
+                    : require("../../../../assets/avatar.png")
+                }
+              />
               <View style={{ marginLeft: 15 }}>
-                <Title style={styles.title}>{user.displayName}</Title>
+                <Title style={styles.title}>{name}</Title>
                 <Caption style={[styles.caption, styles.email]}>
-                  {user.email}
+                  {currentUser.email}
                 </Caption>
               </View>
             </View>
@@ -46,13 +53,13 @@ export const DrawerContent = (props) => {
             <View style={styles.row}>
               <View style={styles.section}>
                 <Paragraph style={[styles.paragraph, styles.caption]}>
-                  {users[0].followers}
+                  {followers.length}
                 </Paragraph>
                 <Caption style={styles.caption}>Seguidores</Caption>
               </View>
               <View style={styles.section}>
                 <Paragraph style={[styles.paragraph, styles.caption]}>
-                  {users[0].following}
+                  {following.length}
                 </Paragraph>
                 <Caption style={styles.caption}>Seguidos</Caption>
               </View>
@@ -66,14 +73,20 @@ export const DrawerContent = (props) => {
           </TouchableRipple>
           <TouchableRipple
             onPress={() =>
-              navigate(names.profile, { tab: profileTabs.publishedPosts })
+              navigate(names.profile, {
+                tab: profileTabs.publishedPosts,
+                userId: currentUser.uid,
+              })
             }
           >
             <Drawer.Item icon="account-outline" label="Perfil" />
           </TouchableRipple>
           <TouchableRipple
             onPress={() =>
-              navigate(names.profile, { tab: profileTabs.savedPosts })
+              navigate(names.profile, {
+                tab: profileTabs.savedPosts,
+                userId: currentUser.uid,
+              })
             }
           >
             <Drawer.Item icon="bookmark-outline" label="Guardados" />
@@ -81,9 +94,9 @@ export const DrawerContent = (props) => {
           <TouchableRipple onPress={() => console.log("pressed")}>
             <Drawer.Item icon="cog-outline" label="Configuración" />
           </TouchableRipple>
-          <TouchableRipple onPress={() => console.log("pressed")}>
+          {/* <TouchableRipple onPress={() => console.log("pressed")}>
             <Drawer.Item icon="account-check-outline" label="Soporte" />
-          </TouchableRipple>
+          </TouchableRipple> */}
         </Drawer.Section>
       </DrawerContentScrollView>
       <Drawer.Section>

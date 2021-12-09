@@ -6,7 +6,7 @@ export const Cards = ({ posts }) => {
   return (
     <View>
       {posts.map((post) => (
-        <Card key={post._id} post={post} />
+        <Card key={post.uid} post={post} />
       ))}
     </View>
   );

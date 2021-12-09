@@ -6,10 +6,11 @@ import { ErrorMessage, Logo } from "../../components";
 import { BackButton } from "../../components/buttons";
 import { Background } from "../../components/login";
 import { styles } from "./styles";
-import { useFireBaseContext } from "../../config/firebase";
+import { useDispatch } from "react-redux";
+import { register } from "../../redux/users/userActions";
 
 export const Register = ({ navigation: { navigate } }) => {
-  const { register } = useFireBaseContext();
+  const dispatch = useDispatch();
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -32,20 +33,22 @@ export const Register = ({ navigation: { navigate } }) => {
     }
 
     if (!name.error && !email.error && !password.error) {
-      register(name.value, email.value, password.value).catch((error) => {
-        if (error.code === "auth/email-already-in-use") {
-          setEmail({ ...email, error: "El correo es ya esta en uso" });
-        } else if (error.code === "auth/invalid-email") {
-          setEmail({ ...email, error: "El correo es inválido" });
-        } else if (error.code === "auth/weak-password") {
-          setPassword({
-            ...password,
-            error: "La contraseña debe tener al menos 6 caracteres",
-          });
-        } else {
-          console.log(error);
+      dispatch(register(name.value, email.value, password.value)).catch(
+        (error) => {
+          if (error.code === "auth/email-already-in-use") {
+            setEmail({ ...email, error: "El correo es ya esta en uso" });
+          } else if (error.code === "auth/invalid-email") {
+            setEmail({ ...email, error: "El correo es inválido" });
+          } else if (error.code === "auth/weak-password") {
+            setPassword({
+              ...password,
+              error: "La contraseña debe tener al menos 6 caracteres",
+            });
+          } else {
+            console.log(error);
+          }
         }
-      });
+      );
     }
   };
 

@@ -5,8 +5,15 @@ import {
 } from "@expo/vector-icons";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { dislikePost, likePost } from "../../redux/posts/postActions";
+import { savePost, unsavePost } from "../../redux/users/userActions";
+import { names } from "../../screens";
 
-export const CardButtons = ({ liked, setLiked, saved, setSaved }) => {
+export const CardButtons = ({ postId, navigate }) => {
+  const dispatch = useDispatch();
+  const { liked, saved } = useSelector((state) => state.userState);
+
   return (
     <View
       style={{
@@ -16,17 +23,17 @@ export const CardButtons = ({ liked, setLiked, saved, setSaved }) => {
       }}
     >
       <View style={{ flexDirection: "row" }}>
-        {liked ? (
-          <TouchableOpacity onPress={() => setLiked(false)}>
+        {liked.includes(postId) ? (
+          <TouchableOpacity onPress={() => dispatch(dislikePost(postId))}>
             <AntDesign name="heart" size={24} color="red" />
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity onPress={() => setLiked(true)}>
+          <TouchableOpacity onPress={() => dispatch(likePost(postId))}>
             <AntDesign name="hearto" size={24} color="black" />
           </TouchableOpacity>
         )}
 
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={() => navigate(names.comments)}>
           <MaterialCommunityIcons
             name="comment-text-outline"
             size={24}
@@ -38,12 +45,12 @@ export const CardButtons = ({ liked, setLiked, saved, setSaved }) => {
         </TouchableOpacity>
       </View>
       <View>
-        {saved ? (
-          <TouchableOpacity onPress={() => setSaved(false)}>
+        {saved.includes(postId) ? (
+          <TouchableOpacity onPress={() => dispatch(unsavePost(postId))}>
             <Ionicons name="bookmark" size={24} color="#5F89FE" />
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity onPress={() => setSaved(true)}>
+          <TouchableOpacity onPress={() => dispatch(savePost(postId))}>
             <Ionicons name="bookmark-outline" size={24} color="black" />
           </TouchableOpacity>
         )}

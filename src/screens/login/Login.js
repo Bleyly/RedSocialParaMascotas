@@ -1,15 +1,16 @@
 import React, { useRef, useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { Button, Text, TextInput, Title } from "react-native-paper";
+import { useDispatch } from "react-redux";
 import { ErrorMessage, Logo } from "../../components";
 import { BackButton } from "../../components/buttons";
 import { Background } from "../../components/login";
-import { useFireBaseContext } from "../../config/firebase";
+import { login } from "../../redux/users/userActions";
 import { names } from "../names";
 import { styles } from "./styles";
 
 export const Login = ({ navigation: { navigate } }) => {
-  const { login } = useFireBaseContext();
+  const dispatch = useDispatch();
 
   const passwordRef = useRef();
 
@@ -17,17 +18,15 @@ export const Login = ({ navigation: { navigate } }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
-    try {
-      await login(email, password);
-    } catch (error) {
+  const handleLogin = () => {
+    dispatch(login(email, password)).catch((error) => {
       if (error.code === "auth/user-not-found") {
         setError("Usuario no encontrado");
       } else {
         setError("Correo o contraseña no válidos");
       }
       console.log(error);
-    }
+    });
   };
 
   return (

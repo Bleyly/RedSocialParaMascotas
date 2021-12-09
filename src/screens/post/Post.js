@@ -46,7 +46,7 @@ export const Post = ({ navigation: { navigate } }) => {
               )}
             />
           </TouchableRipple>
-          <TouchableRipple onPress={() => navigate(names.articlePost)}>
+          {/* <TouchableRipple onPress={() => navigate(names.articlePost)}>
             <List.Item
               title="Vender Artículo"
               left={() => (
@@ -56,7 +56,7 @@ export const Post = ({ navigation: { navigate } }) => {
                 />
               )}
             />
-          </TouchableRipple>
+          </TouchableRipple> */}
         </List.Section>
       </View>
     </View>
