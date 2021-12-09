@@ -2,14 +2,11 @@ import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useRef, useState } from "react";
 import { View, ScrollView } from "react-native";
 import { TouchableRipple, DefaultTheme } from "react-native-paper";
-import { photos } from "../../../data/photos";
-import { posts } from "../../../data/posts";
-import { users } from "../../../data/users";
 import { profileTabs } from "../../helpers/profileTabs";
 import { Cards } from "../Cards";
 import { ImagesGrid } from "../ImagesGrid";
 
-export const Tabs = ({ tab }) => {
+export const Tabs = ({ tab, posts, savedPosts, isCurrentUser }) => {
   const scrollRef = useRef();
   const [selectedTab, setSelectedTab] = useState(undefined);
 
@@ -64,45 +61,43 @@ export const Tabs = ({ tab }) => {
             }
           />
         </TouchableRipple>
-        <TouchableRipple
-          onPress={() => changeTab(profileTabs.savedPosts)}
-          style={{
-            flexGrow: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            padding: 8,
-            borderBottomColor: isActive(profileTabs.savedPosts)
-              ? DefaultTheme.colors.primary
-              : "white",
-            borderBottomWidth: 1,
-          }}
-        >
-          <Ionicons
-            name="bookmark-outline"
-            size={28}
-            color={
-              isActive(profileTabs.savedPosts)
+        {isCurrentUser && (
+          <TouchableRipple
+            onPress={() => changeTab(profileTabs.savedPosts)}
+            style={{
+              flexGrow: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              padding: 8,
+              borderBottomColor: isActive(profileTabs.savedPosts)
                 ? DefaultTheme.colors.primary
-                : "black"
-            }
-          />
-        </TouchableRipple>
-      </View>
-      <ScrollView ref={scrollRef} style={{ backgroundColor: "#e0e0e0" }}>
-        {selectedTab === profileTabs.publishedPosts ? (
-          <Cards
-            posts={posts.map((post) => {
-              const user = users.find((user) => user._id === post.userId);
-
-              return { ...post, user };
-            })}
-          />
-        ) : (
-          <View style={{ marginTop: 8 }}>
-            <ImagesGrid images={[...photos, ...photos, ...photos, ...photos]} />
-          </View>
+                : "white",
+              borderBottomWidth: 1,
+            }}
+          >
+            <Ionicons
+              name="bookmark-outline"
+              size={28}
+              color={
+                isActive(profileTabs.savedPosts)
+                  ? DefaultTheme.colors.primary
+                  : "black"
+              }
+            />
+          </TouchableRipple>
         )}
-      </ScrollView>
+      </View>
+      {selectedTab && (
+        <ScrollView ref={scrollRef} style={{ backgroundColor: "#e0e0e0" }}>
+          {selectedTab === profileTabs.publishedPosts ? (
+            <Cards posts={posts} />
+          ) : (
+            <View style={{ marginTop: 8 }}>
+              <ImagesGrid images={savedPosts} />
+            </View>
+          )}
+        </ScrollView>
+      )}
     </View>
   );
 };

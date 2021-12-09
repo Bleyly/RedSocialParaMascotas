@@ -1,20 +1,22 @@
 import {
   addDoc,
+  arrayRemove,
+  arrayUnion,
   collection,
   doc,
   getDoc,
   getDocs,
+  increment,
   orderBy,
   query,
   Timestamp,
+  updateDoc,
   where,
 } from "@firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "@firebase/storage";
 import { db, storage } from "../../config/firebase";
+import { POSTS_COLLECTION, USERS_COLLECTION } from "../../helpers/collections";
 import { postTypes } from "./postTypes";
-
-const POSTS_COLLECTION = "posts";
-const USERS_COLLECTION = "users";
 
 export const createPost = (post, pictures) => {
   return async (dispatch, getStore) => {
@@ -65,10 +67,52 @@ export const getFilteredPosts = ({ tag, searchText }) => {
 
     posts = await getPost(snapshot);
     if (searchText) {
-      posts = posts.filter((post) => post.description.includes(searchText));
+      posts = posts.filter((post) =>
+        post.description.toLowerCase().includes(searchText.toLowerCase())
+      );
     }
 
     dispatch({ type: postTypes.getPosts, payload: posts });
+  };
+};
+
+export const likePost = (postId) => {
+  return async (dispatch, getStore) => {
+    const {
+      userState: {
+        currentUser: { uid },
+      },
+    } = getStore();
+
+    await updateDoc(doc(db, POSTS_COLLECTION, postId), {
+      likes: increment(1),
+    });
+
+    await updateDoc(doc(db, USERS_COLLECTION, uid), {
+      liked: arrayUnion(postId),
+    });
+
+    dispatch({ type: postTypes.like, payload: postId });
+  };
+};
+
+export const dislikePost = (postId) => {
+  return async (dispatch, getStore) => {
+    const {
+      userState: {
+        currentUser: { uid },
+      },
+    } = getStore();
+
+    await updateDoc(doc(db, POSTS_COLLECTION, postId), {
+      likes: increment(-1),
+    });
+
+    await updateDoc(doc(db, USERS_COLLECTION, uid), {
+      liked: arrayRemove(postId),
+    });
+
+    dispatch({ type: postTypes.dislike, payload: postId });
   };
 };
 

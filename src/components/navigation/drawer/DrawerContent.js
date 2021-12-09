@@ -53,13 +53,13 @@ export const DrawerContent = (props) => {
             <View style={styles.row}>
               <View style={styles.section}>
                 <Paragraph style={[styles.paragraph, styles.caption]}>
-                  {followers}
+                  {followers.length}
                 </Paragraph>
                 <Caption style={styles.caption}>Seguidores</Caption>
               </View>
               <View style={styles.section}>
                 <Paragraph style={[styles.paragraph, styles.caption]}>
-                  {following}
+                  {following.length}
                 </Paragraph>
                 <Caption style={styles.caption}>Seguidos</Caption>
               </View>
@@ -73,14 +73,20 @@ export const DrawerContent = (props) => {
           </TouchableRipple>
           <TouchableRipple
             onPress={() =>
-              navigate(names.profile, { tab: profileTabs.publishedPosts })
+              navigate(names.profile, {
+                tab: profileTabs.publishedPosts,
+                userId: currentUser.uid,
+              })
             }
           >
             <Drawer.Item icon="account-outline" label="Perfil" />
           </TouchableRipple>
           <TouchableRipple
             onPress={() =>
-              navigate(names.profile, { tab: profileTabs.savedPosts })
+              navigate(names.profile, {
+                tab: profileTabs.savedPosts,
+                userId: currentUser.uid,
+              })
             }
           >
             <Drawer.Item icon="bookmark-outline" label="Guardados" />

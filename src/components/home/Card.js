@@ -1,20 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { Divider, Text } from "react-native-paper";
 import { UserInfo } from "../UserInfo";
 import { CardButtons } from "./CardButtons";
+import { useNavigation } from "@react-navigation/native";
+import { names } from "../../screens/names";
+import { profileTabs } from "../../helpers/profileTabs";
 
 export const Card = ({
   post: {
+    uid,
     user: { name, photo: avatar },
     description,
     pictures,
     likes,
     comments,
+    userId,
   },
 }) => {
-  const [liked, setLiked] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const { navigate } = useNavigation();
+
+  const handlePress = () => {
+    navigate(names.profile, {
+      tab: profileTabs.publishedPosts,
+      userId: userId,
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -22,6 +33,7 @@ export const Card = ({
         style={styles.userInfo}
         image={avatar ? { uri: avatar } : require("../../../assets/avatar.png")}
         name={name}
+        onPress={handlePress}
       />
 
       <Text style={styles.description}>{description}</Text>
@@ -30,7 +42,7 @@ export const Card = ({
 
       <View style={styles.textContainer}>
         <View style={styles.row}>
-          <Text>{liked ? likes + 1 : likes}</Text>
+          <Text>{likes}</Text>
           <Text style={styles.bold}> Me gusta</Text>
         </View>
         <View style={styles.row}>
@@ -41,12 +53,7 @@ export const Card = ({
 
       <Divider />
 
-      <CardButtons
-        liked={liked}
-        setLiked={setLiked}
-        saved={saved}
-        setSaved={setSaved}
-      />
+      <CardButtons postId={uid} navigate={navigate} />
     </View>
   );
 };
@@ -57,7 +64,12 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   userInfo: { marginLeft: 16 },
-  description: { margin: 16 },
+  description: {
+    marginTop: 8,
+    marginRight: 16,
+    marginBottom: 16,
+    marginLeft: 16,
+  },
   image: {
     width: "100%",
     height: 360,
