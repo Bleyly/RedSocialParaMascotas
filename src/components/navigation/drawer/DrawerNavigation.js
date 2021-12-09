@@ -4,12 +4,13 @@ import { Appbar } from "react-native-paper";
 import { PicturesProvider } from "../../../helpers/picturesContext";
 import { getHeaderTitle } from "../../../helpers/getHeaderTitle";
 import { names, titles } from "../../../screens";
-import { Chats } from "../../../screens/chat/Chats";
 import { Profile } from "../../../screens/Profile";
 import { ChatNavigation } from "../ChatNavigation";
 import { Camera } from "../../../screens/Camera";
 import { TabNavigation } from "../TabNavigation";
 import { DrawerContent } from "./DrawerContent";
+import { Comments } from "../../../screens/Comments";
+import { Ionicons } from "@expo/vector-icons";
 
 const Drawer = createDrawerNavigator();
 
@@ -22,11 +23,25 @@ export const DrawerNavigation = () => {
         screenOptions={{
           header: ({
             options: { title },
-            navigation: { openDrawer, navigate },
+            navigation: { openDrawer, navigate, goBack },
+            route: { name },
           }) => {
             return (
               <Appbar>
-                <Appbar.Action icon="menu" onPress={openDrawer} />
+                {name === names.comments ? (
+                  <Appbar.Action
+                    icon={() => (
+                      <Ionicons
+                        name="arrow-back"
+                        color="white"
+                        size={24}
+                        onPress={() => goBack()}
+                      />
+                    )}
+                  />
+                ) : (
+                  <Appbar.Action icon="menu" onPress={openDrawer} />
+                )}
                 <Appbar.Content title={title} />
                 <Appbar.Action
                   icon="chat"
@@ -59,6 +74,7 @@ export const DrawerNavigation = () => {
           }}
         />
         <Drawer.Screen name="ChatNavigation" component={ChatNavigation} />
+        <Drawer.Screen name={names.comments} component={Comments} />
       </Drawer.Navigator>
     </PicturesProvider>
   );
