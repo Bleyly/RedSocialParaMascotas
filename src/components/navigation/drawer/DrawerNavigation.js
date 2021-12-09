@@ -24,8 +24,8 @@ export const DrawerNavigation = () => {
         screenOptions={{
           header: ({
             options: { title },
-            navigation: { openDrawer, navigate },
-            route: name,
+            navigation: { openDrawer, navigate, goBack },
+            route: { name },
           }) => {
             return (
               <Appbar>
@@ -46,7 +46,9 @@ export const DrawerNavigation = () => {
                 <Appbar.Content title={title} />
                 <Appbar.Action
                   icon="chat"
-                  onPress={() => navigate("ChatNavigation")}
+                  onPress={() =>
+                    navigate("ChatNavigation", { screen: "chats" })
+                  }
                 />
               </Appbar>
             );

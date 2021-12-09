@@ -1,8 +1,9 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { Fragment } from "react";
 import { StyleSheet, View } from "react-native";
 import { Avatar, Button, Caption, Paragraph, Title } from "react-native-paper";
 import { useDispatch } from "react-redux";
-import { follow, unFollow } from "../../redux/users/userActions";
+import { follow, getChatId, unFollow } from "../../redux/users/userActions";
 
 export const UserProfileInfo = ({ user, isCurrentUser }) => {
   const {
@@ -22,6 +23,16 @@ export const UserProfileInfo = ({ user, isCurrentUser }) => {
     } else {
       dispatch(follow(uid));
     }
+  };
+
+  const { navigate } = useNavigation();
+
+  const handleMessage = () => {
+    dispatch(
+      getChatId(uid, (chatId) => {
+        navigate("ChatNavigation", { screen: "chat", params: { chatId } });
+      })
+    );
   };
 
   return (
@@ -49,18 +60,37 @@ export const UserProfileInfo = ({ user, isCurrentUser }) => {
               <Caption style={styles.caption}>Seguidos</Caption>
             </View>
           </View>
-          {!isCurrentUser && (
-            <Button
-              mode={isFollowing ? "contained" : "outlined"}
-              style={{ marginTop: 16 }}
-              onPress={handleFollow}
-            >
-              {isFollowing ? "Dejar de Seguir" : "Seguir"}
-            </Button>
-          )}
         </View>
       </View>
-      <Paragraph style={{ marginLeft: 16 }}>{description}</Paragraph>
+      {!isCurrentUser && (
+        <View
+          style={{
+            flexDirection: "row",
+            width: "100%",
+            justifyContent: "space-evenly",
+          }}
+        >
+          <Button
+            style={{ width: 155 }}
+            mode={isFollowing ? "contained" : "outlined"}
+            onPress={handleFollow}
+            compact
+          >
+            {isFollowing ? "Dejar de Seguir" : "Seguir"}
+          </Button>
+          <Button
+            style={{ width: 155 }}
+            mode="outlined"
+            compact
+            onPress={handleMessage}
+          >
+            Mensaje
+          </Button>
+        </View>
+      )}
+      <Paragraph style={{ marginTop: 16, marginLeft: 16 }}>
+        {description}
+      </Paragraph>
     </Fragment>
   );
 };

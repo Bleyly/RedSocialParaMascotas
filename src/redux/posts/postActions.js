@@ -29,7 +29,7 @@ export const createPost = (post, pictures) => {
       userId: currentUser.uid,
       ...post,
       pictures: urls,
-      created: Timestamp.now(),
+      createdAt: Timestamp.now(),
     };
 
     const snapshot = await addDoc(collection(db, POSTS_COLLECTION), data);
@@ -44,7 +44,7 @@ export const createPost = (post, pictures) => {
 export const getPosts = () => {
   return async (dispatch) => {
     const snapshot = await getDocs(
-      query(collection(db, POSTS_COLLECTION), orderBy("created", "desc"))
+      query(collection(db, POSTS_COLLECTION), orderBy("createdAt", "desc"))
     );
 
     const data = snapshot.empty ? [] : await getPost(snapshot);
@@ -62,7 +62,7 @@ export const getFilteredPosts = ({ tag, searchText }) => {
     if (tag) {
       snapshot = await getDocs(query(postsRef, where("tag", "==", tag)));
     } else {
-      snapshot = await getDocs(query(postsRef, orderBy("created", "desc")));
+      snapshot = await getDocs(query(postsRef, orderBy("createdAt", "desc")));
     }
 
     posts = await getPost(snapshot);

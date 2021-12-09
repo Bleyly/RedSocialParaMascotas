@@ -7,4 +7,6 @@ export const userTypes = Object.freeze({
   unFollow: "UNFOLLOW",
   savePost: "SAVE_POST",
   unsavePost: "UNSAVE_POST",
+  getChats: "GET_CHATS",
+  receiveMessage: "RECEIVE_MESSAGE",
 });
