@@ -94,9 +94,9 @@ export const DrawerContent = (props) => {
           <TouchableRipple onPress={() => console.log("pressed")}>
             <Drawer.Item icon="cog-outline" label="Configuración" />
           </TouchableRipple>
-          <TouchableRipple onPress={() => console.log("pressed")}>
+          {/* <TouchableRipple onPress={() => console.log("pressed")}>
             <Drawer.Item icon="account-check-outline" label="Soporte" />
-          </TouchableRipple>
+          </TouchableRipple> */}
         </Drawer.Section>
       </DrawerContentScrollView>
       <Drawer.Section>
