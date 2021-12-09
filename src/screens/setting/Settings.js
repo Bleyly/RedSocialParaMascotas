@@ -24,7 +24,7 @@ export const Settings = ({ navigation: { navigate } }) => {
               )}
             />
           </TouchableRipple>
-          <TouchableRipple onPress={() => navigate(names.personal_information)}>
+          {/* <TouchableRipple onPress={() => navigate(names.personal_information)}>
             <List.Item
               title="Información Personal"
               left={() => (
@@ -34,7 +34,7 @@ export const Settings = ({ navigation: { navigate } }) => {
                 />
               )}
             />
-          </TouchableRipple>
+          </TouchableRipple> */}
           <TouchableRipple onPress={() => navigate(names.post_liked)}>
             <List.Item
               title="Publicación que te gustó"
