@@ -5,6 +5,7 @@ import {
   signOut,
 } from "@firebase/auth";
 import {
+  addDoc,
   arrayRemove,
   arrayUnion,
   collection,
@@ -14,11 +15,17 @@ import {
   orderBy,
   query,
   setDoc,
+  Timestamp,
   updateDoc,
   where,
 } from "@firebase/firestore";
 import { auth, db } from "../../config/firebase";
-import { POSTS_COLLECTION, USERS_COLLECTION } from "../../helpers/collections";
+import {
+  CHATS_COLLECTION,
+  MESSAGES_COLLECTION,
+  POSTS_COLLECTION,
+  USERS_COLLECTION,
+} from "../../helpers/collections";
 import { userTypes } from "./userTypes";
 
 export const register = (name, email, password) => {
@@ -102,7 +109,7 @@ export const getProfile = (userId) => {
         query(
           collection(db, POSTS_COLLECTION),
           where("userId", "==", userId),
-          orderBy("created", "desc")
+          orderBy("createdAt", "desc")
         )
       )
     ).docs.map((post) => ({
@@ -208,4 +215,129 @@ export const unsavePost = (postId) => {
 
     dispatch({ type: userTypes.unsavePost, payload: postId });
   };
+};
+
+export const getChats = () => {
+  return async (dispatch, getStore) => {
+    const {
+      userState: {
+        currentUser: { uid },
+      },
+    } = getStore();
+
+    const chatsSnapshot = await getDocs(
+      collection(db, CHATS_COLLECTION),
+      where("users", "array-contains", uid)
+    );
+
+    const chats = await Promise.all(
+      chatsSnapshot.docs.map(async (chatSnapshot) => {
+        const chat = chatSnapshot.data();
+        const user = (
+          await getDoc(
+            doc(
+              db,
+              USERS_COLLECTION,
+              chat.users.find((user) => user != uid)
+            )
+          )
+        ).data();
+
+        const messages = (
+          await getDocs(
+            query(
+              collection(
+                db,
+                CHATS_COLLECTION,
+                chatSnapshot.id,
+                MESSAGES_COLLECTION
+              ),
+              orderBy("createdAt", "desc")
+            )
+          )
+        ).docs.map((messageSnapshot) => {
+          const message = messageSnapshot.data();
+          return {
+            _id: messageSnapshot.id,
+            ...message,
+            createdAt: message.createdAt.toDate(),
+          };
+        });
+        return {
+          uid: chatSnapshot.id,
+          ...chat,
+          user: { photo: user.photo, name: user.name },
+          messages,
+        };
+      })
+    );
+
+    dispatch({ type: userTypes.getChats, payload: chats });
+  };
+};
+
+export const receiveMessages = (chatId, messages) => ({
+  type: userTypes.receiveMessage,
+  payload: { chatId, messages },
+});
+
+export const sendMessage = (chatId, text) => {
+  return async (dispatch, getStore) => {
+    const {
+      userState: {
+        name,
+        photo,
+        currentUser: { uid },
+      },
+    } = getStore();
+
+    await addDoc(
+      collection(db, CHATS_COLLECTION, chatId, MESSAGES_COLLECTION),
+      {
+        createdAt: Timestamp.now(),
+        text,
+        user: { _id: uid, name, avatar: photo },
+      }
+    );
+  };
+};
+
+export const getChatId = (userId, callback) => {
+  return async (dispatch, getStore) => {
+    const {
+      userState: {
+        currentUser: { uid },
+      },
+    } = getStore();
+
+    let chatId;
+
+    const chatsSnapshot = await getDocs(collection(db, CHATS_COLLECTION));
+
+    if (chatsSnapshot.empty) {
+      chatId = await createChat(uid, userId);
+    } else {
+      const chatSnapshot = chatsSnapshot.docs.find((chatSnapshot) => {
+        const chat = chatSnapshot.data();
+
+        return chat.users.includes(userId) && chat.users.includes(uid);
+      });
+
+      if (!chatSnapshot) {
+        chatId = await createChat(uid, userId);
+      } else {
+        chatId = chatSnapshot.id;
+      }
+    }
+
+    callback(chatId);
+  };
+};
+
+const createChat = async (currentUser, user) => {
+  const chatSnapshot = await addDoc(collection(db, CHATS_COLLECTION), {
+    users: [currentUser, user],
+  });
+
+  return chatSnapshot.id;
 };

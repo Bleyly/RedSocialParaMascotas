@@ -11,6 +11,7 @@ const initialState = {
   following: [],
   liked: [],
   saved: [],
+  chats: [],
 };
 
 export const userReducer = (state = initialState, { type, payload }) => {
@@ -69,6 +70,18 @@ export const userReducer = (state = initialState, { type, payload }) => {
         ...state,
         saved: state.saved.filter((postId) => postId != payload),
       };
+    case userTypes.getChats:
+      return { ...state, chats: payload };
+    case userTypes.receiveMessage:
+      const chats = state.chats.map((chat) => {
+        if (chat.uid === payload.chatId) {
+          chat.messages = [...chat.messages];
+        }
+
+        return chat;
+      });
+
+      return { ...state, chats };
     default:
       return state;
   }
