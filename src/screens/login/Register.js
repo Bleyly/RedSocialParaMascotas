@@ -15,11 +15,14 @@ export const Register = ({ navigation: { navigate } }) => {
   const emailRef = useRef();
   const passwordRef = useRef();
 
+  const [loading, setLoading] = useState(false);
+
   const [name, setName] = useState({ value: "", error: null });
   const [email, setEmail] = useState({ value: "", error: null });
   const [password, setPassword] = useState({ value: "", error: null });
 
   const handleRegister = () => {
+    setLoading(true);
     if (name.value.length === 0) {
       setName({ ...name, error: "El nombre es requerido" });
     }
@@ -101,7 +104,12 @@ export const Register = ({ navigation: { navigate } }) => {
         style={styles.input}
       />
 
-      <Button mode="contained" onPress={handleRegister} style={styles.button}>
+      <Button
+        mode="contained"
+        onPress={handleRegister}
+        style={styles.button}
+        loading={loading}
+      >
         Registrarse
       </Button>
 

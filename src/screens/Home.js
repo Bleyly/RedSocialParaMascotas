@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import React, { useCallback, useEffect } from "react";
 import { ScrollView } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Cards } from "../components/Cards";
@@ -8,9 +9,11 @@ export const Home = () => {
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.postState);
 
-  useEffect(() => {
-    dispatch(getPosts());
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(getPosts());
+    }, [])
+  );
 
   return (
     <ScrollView>

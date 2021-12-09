@@ -22,6 +22,8 @@ export const VenderPost = ({ navigation: { goBack, navigate } }) => {
   const quantityRef = useRef();
   const priceRef = useRef();
 
+  const [loading, setLoading] = useState(false);
+
   const [showAnimals, setShowAnimals] = useState(false);
   const [showRaces, setShowRaces] = useState(false);
 
@@ -36,6 +38,7 @@ export const VenderPost = ({ navigation: { goBack, navigate } }) => {
   const { name: username, photo } = useSelector((state) => state.userState);
 
   const handleSave = () => {
+    setLoading(true);
     dispatch(
       createPost(
         {
@@ -50,7 +53,7 @@ Precio: RD$ ${price}`,
       )
     ).then(() => {
       setPictures([]);
-
+      setLoading(false);
       navigate(names.home);
     });
   };
@@ -145,7 +148,12 @@ Precio: RD$ ${price}`,
 
         <PostPhoto navigate={navigate} />
       </View>
-      <Button mode="contained" onPress={handleSave} style={styles.end}>
+      <Button
+        mode="contained"
+        onPress={handleSave}
+        style={styles.end}
+        loading={loading}
+      >
         Finalizar
       </Button>
     </View>

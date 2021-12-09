@@ -7,22 +7,33 @@ import { Background } from "../../components/login";
 import { styles } from "./styles";
 import { useDispatch } from "react-redux";
 import { resetPassword } from "../../redux/users/userActions";
+import { Alert } from "react-native";
 
 export const ForgotPassword = ({ navigation: { goBack, navigate } }) => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState({ value: "", error: false });
 
   const handleReset = () => {
+    setLoading(true);
     const emailError = validateEmail(email.value);
 
     setEmail({ ...email, error: emailError });
 
     if (!emailError) {
-      dispatch(resetPassword(email.value)).catch((error) => {
+      dispatch(
+        resetPassword(email.value, () => {
+          setLoading(false);
+          Alert.alert(
+            "Revise su correo",
+            "Se le ha enviado un correo con los pasos a seguir.",
+            [{ text: "OK", onPress: () => navigate(names.login) }]
+          );
+        })
+      ).catch((error) => {
+        setLoading(false);
         console.log(error);
       });
-
-      navigate(names.login);
     }
   };
 
@@ -48,7 +59,12 @@ export const ForgotPassword = ({ navigation: { goBack, navigate } }) => {
         style={styles.input}
       />
 
-      <Button mode="contained" onPress={handleReset} style={styles.button}>
+      <Button
+        mode="contained"
+        onPress={handleReset}
+        style={styles.button}
+        loading={loading}
+      >
         Enviar instrucciones
       </Button>
     </Background>

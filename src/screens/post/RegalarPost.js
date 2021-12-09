@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import DropDown from "react-native-paper-dropdown";
 import { animals } from "../../../data/animals";
 import { races } from "../../../data/races";
-import { users } from "../../../data/users";
 import { UserInfo } from "../../components";
 import { PostPhoto, ProgressBar } from "../../components/Post";
 import { usePicturesContext } from "../../helpers/picturesContext";
@@ -22,6 +21,8 @@ export const RegalarPost = ({ navigation: { goBack, navigate } }) => {
   const ageRef = useRef();
   const quantityRef = useRef();
 
+  const [loading, setLoading] = useState(false);
+
   const [showAnimals, setShowAnimals] = useState(false);
   const [showRaces, setShowRaces] = useState(false);
 
@@ -35,6 +36,7 @@ export const RegalarPost = ({ navigation: { goBack, navigate } }) => {
   const { username, photo } = useSelector((state) => state.userState);
 
   const handleSave = () => {
+    setLoading(true);
     dispatch(
       createPost(
         {
@@ -47,6 +49,7 @@ export const RegalarPost = ({ navigation: { goBack, navigate } }) => {
       )
     ).then(() => {
       setPictures([]);
+      setLoading(false);
 
       navigate(names.home);
     });
@@ -130,7 +133,12 @@ export const RegalarPost = ({ navigation: { goBack, navigate } }) => {
 
         <PostPhoto navigate={navigate} />
       </View>
-      <Button mode="contained" onPress={handleSave} style={styles.end}>
+      <Button
+        mode="contained"
+        onPress={handleSave}
+        style={styles.end}
+        loading={loading}
+      >
         Finalizar
       </Button>
     </View>

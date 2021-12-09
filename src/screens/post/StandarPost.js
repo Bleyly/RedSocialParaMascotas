@@ -16,12 +16,14 @@ export const StandarPost = ({ navigation: { goBack, navigate } }) => {
     picturesState: [pictures, setPictures],
   } = usePicturesContext();
 
+  const [loading, setLoading] = useState(false);
   const [description, setDescription] = useState("");
 
   const dispatch = useDispatch();
   const { name, photo } = useSelector((state) => state.userState);
 
   const handleSave = () => {
+    setLoading(true);
     dispatch(
       createPost(
         {
@@ -34,6 +36,7 @@ export const StandarPost = ({ navigation: { goBack, navigate } }) => {
       )
     ).then(() => {
       setPictures([]);
+      setLoading(false);
 
       navigate(names.home);
     });
@@ -66,7 +69,12 @@ export const StandarPost = ({ navigation: { goBack, navigate } }) => {
 
         <PostPhoto navigate={navigate} />
       </View>
-      <Button mode="contained" onPress={handleSave} style={styles.end}>
+      <Button
+        mode="contained"
+        onPress={handleSave}
+        style={styles.end}
+        loading={loading}
+      >
         Finalizar
       </Button>
     </View>
