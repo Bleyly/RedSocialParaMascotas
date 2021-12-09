@@ -17,9 +17,16 @@ export const names = Object.freeze({
 
   // search
   search: "Search",
-
   profile: "Profile",
   camera: "Camera",
+
+  // Settings
+  settings: "Settings",
+  edit_profile: "Edit_Profile",
+  account_status: "Account_Status",
+  personal_information: "Personal_Information",
+  post_liked: "Post_Liked",
+
   comments: "Comments",
 });
 

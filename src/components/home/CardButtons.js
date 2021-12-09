@@ -8,7 +8,7 @@ import { TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { dislikePost, likePost } from "../../redux/posts/postActions";
 import { savePost, unsavePost } from "../../redux/users/userActions";
-import { names } from "../../screens";
+import { names } from "../../screens/names";
 
 export const CardButtons = ({ postId, navigate }) => {
   const dispatch = useDispatch();

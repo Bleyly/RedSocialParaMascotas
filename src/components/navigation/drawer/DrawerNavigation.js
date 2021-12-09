@@ -9,6 +9,7 @@ import { ChatNavigation } from "../ChatNavigation";
 import { Camera } from "../../../screens/Camera";
 import { TabNavigation } from "../TabNavigation";
 import { DrawerContent } from "./DrawerContent";
+import { SettingsNavigation } from "../SettingsNavigation";
 import { Comments } from "../../../screens/Comments";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -23,8 +24,8 @@ export const DrawerNavigation = () => {
         screenOptions={{
           header: ({
             options: { title },
-            navigation: { openDrawer, navigate, goBack },
-            route: { name },
+            navigation: { openDrawer, navigate },
+            route: name,
           }) => {
             return (
               <Appbar>
@@ -74,6 +75,10 @@ export const DrawerNavigation = () => {
           }}
         />
         <Drawer.Screen name="ChatNavigation" component={ChatNavigation} />
+        <Drawer.Screen
+          name="SettingsNavigation"
+          component={SettingsNavigation}
+        />
         <Drawer.Screen name={names.comments} component={Comments} />
       </Drawer.Navigator>
     </PicturesProvider>

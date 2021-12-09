@@ -77,8 +77,10 @@ export const setUser = (user) => {
   };
 };
 
-export const resetPassword = async (email) => {
-  await sendPasswordResetEmail(auth, email);
+export const resetPassword = (email) => {
+  return async () => {
+    await sendPasswordResetEmail(auth, email);
+  };
 };
 
 export const getProfile = (userId) => {
