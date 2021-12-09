@@ -3,15 +3,14 @@ import React, { useRef, useState } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Button, TextInput, Title } from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
+import { useDispatch, useSelector } from "react-redux";
 import { animals } from "../../../data/animals";
-import { useDataContext } from "../../../data/dataContext";
-import { photos } from "../../../data/photos";
 import { races } from "../../../data/races";
-import { users } from "../../../data/users";
 import { UserInfo } from "../../components";
 import { PostPhoto, ProgressBar } from "../../components/Post";
-import { useFireBaseContext } from "../../config/firebase";
 import { usePicturesContext } from "../../helpers/picturesContext";
+import { tags } from "../../helpers/tags";
+import { createPost } from "../../redux/posts/postActions";
 import { names } from "../names";
 
 export const VenderPost = ({ navigation: { goBack, navigate } }) => {
@@ -33,25 +32,27 @@ export const VenderPost = ({ navigation: { goBack, navigate } }) => {
   const [quantity, setQuantity] = useState();
   const [price, setPrice] = useState();
 
-  const { user } = useFireBaseContext();
-  const { addPost, posts } = useDataContext();
+  const dispatch = useDispatch();
+  const { name: username, photo } = useSelector((state) => state.userState);
 
   const handleSave = () => {
-    addPost({
-      _id: posts.length + 1,
-      userId: user.uid,
-      description: `Se vende ${animal} ${race} de ${age} meses llamado ${name.trim()}.
+    dispatch(
+      createPost(
+        {
+          description: `Se vende ${animal} ${race} de ${age} meses llamado ${name.trim()}.
       
 Precio: RD$ ${price}`,
-      photos: [...pictures],
-      tag: "post",
-      likes: Number((Math.random() * 10000).toFixed(0)),
-      comment: Number((Math.random() * 10000).toFixed(0)),
+          tag: tags.sell,
+          likes: 0,
+          comments: [],
+        },
+        pictures
+      )
+    ).then(() => {
+      setPictures([]);
+
+      navigate(names.home);
     });
-
-    setPictures([]);
-
-    navigate(names.home);
   };
 
   return (
@@ -65,7 +66,10 @@ Precio: RD$ ${price}`,
       <ProgressBar progress={0.5} />
 
       <View style={styles.container}>
-        <UserInfo image={users[0].photo} name={user.displayName} />
+        <UserInfo
+          image={photo ? { uri: photo } : require("../../../assets/avatar.png")}
+          name={username}
+        />
 
         <View style={styles.form}>
           <TextInput

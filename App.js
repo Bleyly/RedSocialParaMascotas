@@ -3,46 +3,35 @@ import { LogBox, StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
 import { Provider as PaperProvider } from "react-native-paper";
 import { Routes } from "./src/components/navigation";
-import { FireBaseProvider } from "./src/config/firebase";
 import Constants from "expo-constants";
-import { DataProvider } from "./data/dataContext";
 import { Splash } from "./src/screens/Splash";
 import AppLoading from "expo-app-loading";
+import { Provider as ReduxProvider } from "react-redux";
+import { store } from "./src/redux/store";
 
 // Supresss known issue of firebase
-LogBox.ignoreLogs(["AsyncStorage has been extracted from react-native core"]);
+LogBox.ignoreLogs([
+  "AsyncStorage has been extracted from react-native core",
+  "Setting a timer",
+]);
 
 const App = () => {
-	const [isLoading, setIsLoading] = useState(true);
-
-	useEffect(() => {
-		setTimeout(() => {
-			setIsLoading(false);
-		}, 7000);
-	}, []);
-
-	if (isLoading) {
-		return <Splash />;
-	}
-
-	return (
-		<PaperProvider>
-			<FireBaseProvider>
-				<DataProvider>
-					<View style={styles.container}>
-						<Routes />
-					</View>
-				</DataProvider>
-			</FireBaseProvider>
-		</PaperProvider>
-	);
+  return (
+    <ReduxProvider store={store}>
+      <PaperProvider>
+        <View style={styles.container}>
+          <Routes />
+        </View>
+      </PaperProvider>
+    </ReduxProvider>
+  );
 };
 
 const styles = StyleSheet.create({
-	container: {
-		marginTop: Constants.statusBarHeight,
-		flex: 1,
-	},
+  container: {
+    marginTop: Constants.statusBarHeight,
+    flex: 1,
+  },
 });
 
 export default App;

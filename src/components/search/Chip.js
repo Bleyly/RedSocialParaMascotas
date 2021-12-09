@@ -1,27 +1,35 @@
 import React, { useState } from "react";
 import { View, StyleSheet, ScrollView, Text } from "react-native";
 import { Chip } from "react-native-paper";
+import { tagNames, tags } from "../../helpers/tags";
 
-const categories = ["Todos", "Publicación", "Adopción", "Artículo", "Venta"];
-
-const Chips = () => {
-  const [selected, setSelected] = useState(categories[0]);
-
+const Chips = React.memo(({ filter, setFilter }) => {
   return (
     <View style={styles.container}>
-      {categories.map((category, index) => (
+      <Chip
+        style={styles.chip}
+        selected={!filter.tag}
+        onPress={() =>
+          setFilter((prevFilter) => ({ ...prevFilter, tag: null }))
+        }
+      >
+        Todos
+      </Chip>
+      {Object.values(tags).map((tag, index) => (
         <Chip
           key={index}
           style={styles.chip}
-          selected={category === selected}
-          onPress={() => setSelected(category)}
+          selected={tag === filter.tag}
+          onPress={() =>
+            setFilter((prevFilter) => ({ ...prevFilter, tag: tag }))
+          }
         >
-          {category}
+          {tagNames[tag]}
         </Chip>
       ))}
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
