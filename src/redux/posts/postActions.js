@@ -84,6 +84,8 @@ export const likePost = (postId) => {
       },
     } = getStore();
 
+    dispatch({ type: postTypes.like, payload: postId });
+
     await updateDoc(doc(db, POSTS_COLLECTION, postId), {
       likes: increment(1),
     });
@@ -91,8 +93,6 @@ export const likePost = (postId) => {
     await updateDoc(doc(db, USERS_COLLECTION, uid), {
       liked: arrayUnion(postId),
     });
-
-    dispatch({ type: postTypes.like, payload: postId });
   };
 };
 
@@ -104,6 +104,8 @@ export const dislikePost = (postId) => {
       },
     } = getStore();
 
+    dispatch({ type: postTypes.dislike, payload: postId });
+
     await updateDoc(doc(db, POSTS_COLLECTION, postId), {
       likes: increment(-1),
     });
@@ -111,8 +113,6 @@ export const dislikePost = (postId) => {
     await updateDoc(doc(db, USERS_COLLECTION, uid), {
       liked: arrayRemove(postId),
     });
-
-    dispatch({ type: postTypes.dislike, payload: postId });
   };
 };
 
