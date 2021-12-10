@@ -1,6 +1,6 @@
 import { AntDesign } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Button, TextInput, Title } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,22 +24,31 @@ export const StandarPost = ({ navigation: { goBack, navigate } }) => {
 
   const handleSave = () => {
     setLoading(true);
-    dispatch(
-      createPost(
-        {
-          description: description.trim(),
-          tag: tags.post,
-          likes: 0,
-          comments: [],
-        },
-        pictures
-      )
-    ).then(() => {
-      setPictures([]);
-      setLoading(false);
 
-      navigate(names.home);
-    });
+    if (description && pictures.length) {
+      dispatch(
+        createPost(
+          {
+            description: description.trim(),
+            tag: tags.post,
+            likes: 0,
+            comments: [],
+          },
+          pictures
+        )
+      ).then(() => {
+        setPictures([]);
+        setLoading(false);
+
+        navigate(names.home);
+      });
+    } else {
+      Alert.alert(
+        "Campos inválidos",
+        "Asegúrate de llenar el formulario y agregar una imagen",
+        [{ text: "OK", onPress: () => setLoading(false) }]
+      );
+    }
   };
 
   return (

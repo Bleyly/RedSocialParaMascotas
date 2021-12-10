@@ -1,6 +1,6 @@
 import { AntDesign } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { Button, TextInput, Title } from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +19,6 @@ export const VenderPost = ({ navigation: { goBack, navigate } }) => {
   } = usePicturesContext();
 
   const ageRef = useRef();
-  const quantityRef = useRef();
   const priceRef = useRef();
 
   const [loading, setLoading] = useState(false);
@@ -31,7 +30,6 @@ export const VenderPost = ({ navigation: { goBack, navigate } }) => {
   const [animal, setAnimal] = useState();
   const [race, setRace] = useState();
   const [age, setAge] = useState();
-  const [quantity, setQuantity] = useState();
   const [price, setPrice] = useState();
 
   const dispatch = useDispatch();
@@ -39,23 +37,31 @@ export const VenderPost = ({ navigation: { goBack, navigate } }) => {
 
   const handleSave = () => {
     setLoading(true);
-    dispatch(
-      createPost(
-        {
-          description: `Se vende ${animal} ${race} de ${age} meses llamado ${name.trim()}.
+    if (name && animal && race && age && price && pictures.length) {
+      dispatch(
+        createPost(
+          {
+            description: `Se vende ${animal} ${race} de ${age} llamado ${name.trim()}.
       
 Precio: RD$ ${price}`,
-          tag: tags.sell,
-          likes: 0,
-          comments: [],
-        },
-        pictures
-      )
-    ).then(() => {
-      setPictures([]);
-      setLoading(false);
-      navigate(names.home);
-    });
+            tag: tags.sell,
+            likes: 0,
+            comments: [],
+          },
+          pictures
+        )
+      ).then(() => {
+        setPictures([]);
+        setLoading(false);
+        navigate(names.home);
+      });
+    } else {
+      Alert.alert(
+        "Campos inválidos",
+        "Asegúrate de llenar el formulario y agregar una imagen",
+        [{ text: "OK", onPress: () => setLoading(false) }]
+      );
+    }
   };
 
   return (
@@ -115,21 +121,10 @@ Precio: RD$ ${price}`,
                 ref={ageRef}
                 mode="outlined"
                 label="Edad"
-                onSubmitEditing={() => quantityRef.current.focus()}
+                onSubmitEditing={() => priceRef.current.focus()}
                 returnKeyType="next"
                 value={age}
                 onChangeText={setAge}
-              />
-            </View>
-            <View style={[styles.rowChild, styles.containerCenter]}>
-              <TextInput
-                ref={quantityRef}
-                mode="outlined"
-                label="Cantidad"
-                onSubmitEditing={() => priceRef.current.focus()}
-                returnKeyType="next"
-                value={quantity}
-                onChangeText={setQuantity}
               />
             </View>
             <View style={[styles.rowChild, styles.containerRight]}>
@@ -184,6 +179,5 @@ const styles = StyleSheet.create({
   },
   rowChild: { flexGrow: 1 },
   containerLeft: { marginRight: 4 },
-  containerCenter: { marginLeft: 4, marginRight: 4 },
   containerRight: { marginLeft: 4 },
 });
