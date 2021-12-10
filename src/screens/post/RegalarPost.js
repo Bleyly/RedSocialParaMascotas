@@ -1,6 +1,6 @@
 import { AntDesign } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Button, TextInput, Title } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import DropDown from "react-native-paper-dropdown";
@@ -19,7 +19,6 @@ export const RegalarPost = ({ navigation: { goBack, navigate } }) => {
   } = usePicturesContext();
 
   const ageRef = useRef();
-  const quantityRef = useRef();
 
   const [loading, setLoading] = useState(false);
 
@@ -30,29 +29,36 @@ export const RegalarPost = ({ navigation: { goBack, navigate } }) => {
   const [animal, setAnimal] = useState();
   const [race, setRace] = useState();
   const [age, setAge] = useState();
-  const [quantity, setQuantity] = useState();
 
   const dispatch = useDispatch();
   const { username, photo } = useSelector((state) => state.userState);
 
   const handleSave = () => {
     setLoading(true);
-    dispatch(
-      createPost(
-        {
-          description: `Se regala ${animal} ${race} de ${age} meses llamado ${name.trim()}.`,
-          tag: tags.adopt,
-          likes: 0,
-          comments: [],
-        },
-        pictures
-      )
-    ).then(() => {
-      setPictures([]);
-      setLoading(false);
+    if (name && animal && race && age && pictures.length) {
+      dispatch(
+        createPost(
+          {
+            description: `Se regala ${animal} ${race} de ${age} llamado ${name.trim()}.`,
+            tag: tags.adopt,
+            likes: 0,
+            comments: [],
+          },
+          pictures
+        )
+      ).then(() => {
+        setPictures([]);
+        setLoading(false);
 
-      navigate(names.home);
-    });
+        navigate(names.home);
+      });
+    } else {
+      Alert.alert(
+        "Campos inválidos",
+        "Asegúrate de llenar el formulario y agregar una imagen",
+        [{ text: "OK", onPress: () => setLoading(false) }]
+      );
+    }
   };
 
   return (
@@ -107,25 +113,14 @@ export const RegalarPost = ({ navigation: { goBack, navigate } }) => {
             </View>
           </View>
           <View style={styles.row}>
-            <View style={[styles.rowChild, styles.containerLeft]}>
+            <View style={styles.rowChild}>
               <TextInput
                 ref={ageRef}
                 mode="outlined"
                 label="Edad"
-                onSubmitEditing={() => quantityRef.current.focus()}
                 returnKeyType="next"
                 value={age}
                 onChangeText={setAge}
-              />
-            </View>
-            <View style={[styles.rowChild, styles.containerRight]}>
-              <TextInput
-                ref={quantityRef}
-                mode="outlined"
-                label="Cantidad"
-                returnKeyType="done"
-                value={quantity}
-                onChangeText={setQuantity}
               />
             </View>
           </View>
