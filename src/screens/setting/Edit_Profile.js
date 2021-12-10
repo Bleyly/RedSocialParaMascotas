@@ -43,7 +43,7 @@ export const Edit_Profile = ({ navigation: { navigate } }) => {
             });
           }
         )
-      );
+      ).catch(() => setLoading(false));
     }
   };
 
