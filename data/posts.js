@@ -1,0 +1,58 @@
+import { photos } from "./photos";
+
+export const posts = [
+  {
+    _id: 1,
+    userId: 1,
+    description: "Inserte descripción aqui",
+    photos: [photos[0]],
+    tag: "post",
+    likes: Number((Math.random() * 10000).toFixed(0)),
+    comment: Number((Math.random() * 10000).toFixed(0)),
+  },
+  {
+    _id: 2,
+    userId: 1,
+    description: "Inserte descripción aqui",
+    photos: [photos[1]],
+    tag: "post",
+    likes: Number((Math.random() * 10000).toFixed(0)),
+    comment: Number((Math.random() * 10000).toFixed(0)),
+  },
+  {
+    _id: 3,
+    userId: 2,
+    description: "Inserte descripción aqui",
+    photos: [photos[2]],
+    tag: "post",
+    likes: Number((Math.random() * 10000).toFixed(0)),
+    comment: Number((Math.random() * 10000).toFixed(0)),
+  },
+  {
+    _id: 4,
+    userId: 2,
+    description: "Inserte descripción aqui",
+    photos: [photos[3]],
+    tag: "post",
+    likes: Number((Math.random() * 10000).toFixed(0)),
+    comment: Number((Math.random() * 10000).toFixed(0)),
+  },
+  {
+    _id: 5,
+    userId: 3,
+    description: "Inserte descripción aqui",
+    photos: [photos[0]],
+    tag: "post",
+    likes: Number((Math.random() * 10000).toFixed(0)),
+    comment: Number((Math.random() * 10000).toFixed(0)),
+  },
+  {
+    _id: 6,
+    userId: 3,
+    description: "Inserte descripción aqui",
+    photos: [photos[1]],
+    tag: "post",
+    likes: Number((Math.random() * 10000).toFixed(0)),
+    comment: Number((Math.random() * 10000).toFixed(0)),
+  },
+];
