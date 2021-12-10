@@ -21,7 +21,9 @@ export const usePicker = () => {
           quality: 1,
         });
 
-        savePicture([{ uri }]);
+        if (uri) {
+          savePicture([{ uri }]);
+        }
       } else {
         alert("Lo sentimos, necesitamos permiso a la galleria!");
       }
