@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { Divider, Text } from "react-native-paper";
 import { UserInfo } from "../UserInfo";
@@ -6,6 +6,9 @@ import { CardButtons } from "./CardButtons";
 import { useNavigation } from "@react-navigation/native";
 import { names } from "../../screens/names";
 import { profileTabs } from "../../helpers/profileTabs";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../../config/firebase";
+import { POSTS_COLLECTION } from "../../helpers/collections";
 
 export const Card = ({
   post: {
@@ -13,12 +16,13 @@ export const Card = ({
     user: { name, photo: avatar },
     description,
     pictures,
-    likes,
+    likes: currentLikes,
     comments,
     userId,
   },
 }) => {
   const { navigate } = useNavigation();
+  const [likes, setLikes] = useState(currentLikes);
 
   const handlePress = () => {
     navigate(names.profile, {
@@ -26,6 +30,17 @@ export const Card = ({
       userId: userId,
     });
   };
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      doc(db, POSTS_COLLECTION, uid),
+      (postSnapshot) => {
+        setLikes(postSnapshot.get("likes"));
+      }
+    );
+
+    return unsubscribe;
+  }, []);
 
   return (
     <View style={styles.container}>

@@ -196,11 +196,11 @@ export const savePost = (postId) => {
       },
     } = getStore();
 
+    dispatch({ type: userTypes.savePost, payload: postId });
+
     await updateDoc(doc(db, USERS_COLLECTION, uid), {
       saved: arrayUnion(postId),
     });
-
-    dispatch({ type: userTypes.savePost, payload: postId });
   };
 };
 
@@ -212,11 +212,11 @@ export const unsavePost = (postId) => {
       },
     } = getStore();
 
+    dispatch({ type: userTypes.unsavePost, payload: postId });
+
     await updateDoc(doc(db, USERS_COLLECTION, uid), {
       saved: arrayRemove(postId),
     });
-
-    dispatch({ type: userTypes.unsavePost, payload: postId });
   };
 };
 
