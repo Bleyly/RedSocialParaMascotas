@@ -28,6 +28,7 @@ export const Login = ({ navigation: { navigate } }) => {
       } else {
         setError("Correo o contraseña no válidos");
       }
+      setLoading(false);
       console.log(error);
     });
   };

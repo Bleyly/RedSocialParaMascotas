@@ -50,6 +50,8 @@ export const Register = ({ navigation: { navigate } }) => {
           } else {
             console.log(error);
           }
+
+          setLoading(false);
         }
       );
     }
