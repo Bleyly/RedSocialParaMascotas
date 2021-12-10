@@ -229,8 +229,10 @@ export const getChats = () => {
     } = getStore();
 
     const chatsSnapshot = await getDocs(
-      collection(db, CHATS_COLLECTION),
-      where("users", "array-contains", uid)
+      query(
+        collection(db, CHATS_COLLECTION),
+        where("users", "array-contains", uid)
+      )
     );
 
     const chats = await Promise.all(
